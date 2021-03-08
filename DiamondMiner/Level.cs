@@ -18,11 +18,11 @@ namespace DiamondMiner
 
         public void LoadLevelContent()
         {
-            diamond = Content.Load<Texture2D>("Crate_Brown");
-            rocks = Content.Load<Texture2D>("Wall_Brown");
-            dirt = Content.Load<Texture2D>("EndPoint_Blue");
-            wall = Content.Load<Texture2D>("arial12");
-            dynamite = Content.Load<Texture2D>("");
+            diamond = Content.Load<Texture2D>("diamante");
+            rocks = Content.Load<Texture2D>("pedra");
+            dirt = Content.Load<Texture2D>("terra");
+            wall = Content.Load<Texture2D>("muro");
+            //dynamite = Content.Load<Texture2D>("");
         }
 
 
