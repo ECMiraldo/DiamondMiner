@@ -1,6 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Collections;
+using System.IO;
 
 namespace DiamondMiner
 {
@@ -8,6 +13,8 @@ namespace DiamondMiner
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+
+        int tileSize = 32;
 
         public Game1()
         {
@@ -19,14 +26,14 @@ namespace DiamondMiner
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
             base.Initialize();
+            _graphics.ApplyChanges();
         }
 
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            
             // TODO: use this.Content to load your game content here
         }
 
