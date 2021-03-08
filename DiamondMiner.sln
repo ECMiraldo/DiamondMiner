@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31005.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiamondMiner", "DiamondMiner\DiamondMiner.csproj", "{BA525630-3DB5-413F-918F-B4495C6ABE6F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BA525630-3DB5-413F-918F-B4495C6ABE6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA525630-3DB5-413F-918F-B4495C6ABE6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA525630-3DB5-413F-918F-B4495C6ABE6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA525630-3DB5-413F-918F-B4495C6ABE6F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BE569D0F-A986-45D8-9290-87B0B67A8664}
+	EndGlobalSection
+EndGlobal
