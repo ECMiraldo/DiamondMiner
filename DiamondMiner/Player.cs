@@ -13,8 +13,8 @@ namespace DiamondMiner
         {
             Up, Down, Left, Right
         }
-        private Game1 game;
-        private Texture2D character;
+        private Game1 game1;
+        public Texture2D character;
 
         private Point position;
         private Direction direction;
@@ -30,13 +30,13 @@ namespace DiamondMiner
         public Player(Game1 game1, int x, int y)
         {
             position = new Point(x, y);
-            game = game1;
+            game1 = game1;
         }
 
 
         public void LoadSprite() //Goes to game1 load
         {
-
+            character = game1.Content.Load<Texture2D>("jogador");
         }
 
         public void Movement(GameTime gameTime) //Goes to game1 update
@@ -49,7 +49,6 @@ namespace DiamondMiner
                 position.X--;
                 direction = Direction.Left;
                 delta = speed;
-                // directionVector = new Vector2(-1, 0);
                 directionVector = -Vector2.UnitX;
             }
             else if (kState.IsKeyDown(Keys.W))
@@ -79,7 +78,7 @@ namespace DiamondMiner
 
         }
 
-        public void DrawPlayer() //Goes to game1 draw
+        public void DrawPlayer(GameTime gameTime, SpriteBatch spriteBatch) //Goes to game1 draw
         {
 
         }

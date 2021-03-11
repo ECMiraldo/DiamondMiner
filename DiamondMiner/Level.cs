@@ -90,6 +90,9 @@ namespace DiamondMiner
                         case '.':
                             _spriteBatch.Draw(dirt, position, Color.White);
                             break;
+                        case 'M':
+                            _spriteBatch.Draw(player.character, position, Color.White);
+                            break;
                         //case '*':
                         //    game1._spriteBatch.Draw(rocks, position, Color.White);
                         //    break;
