@@ -8,27 +8,22 @@ using System.IO;
 
 namespace DiamondMiner
 {
-    public class Level : Game
+    public class Level
     {
-        char[,] matrix;
+        
+        private Game1 game1;
+        public char[,] matrix;
         public string levelName;
         Texture2D diamond, rocks, dirt, dynamite, wall;
+        private Player player;
 
         public List<Point> Diamonds;
+        public List<Point> Dynamite;
 
-        public void LoadLevelContent()
+       
+        public Level(Game1 game1, string levelFile) //Goes to game1 load
         {
-            diamond = Content.Load<Texture2D>("diamante");
-            rocks = Content.Load<Texture2D>("pedra");
-            dirt = Content.Load<Texture2D>("terra");
-            wall = Content.Load<Texture2D>("muro");
-            //dynamite = Content.Load<Texture2D>("");
-        }
-
-
-
-        public void LoadLevel(string levelFile) //Goes to game1 load
-        {
+            this.game1 = game1;
             Diamonds = new List<Point>();
             string[] linhas = File.ReadAllLines($"Content/{levelFile}");  // "Content/" + level
             int nrLinhas = linhas.Length;
@@ -44,10 +39,15 @@ namespace DiamondMiner
                         Diamonds.Add(new Point(x, y));
                         matrix[x, y] = ' '; // put a blank instead of the box '#'
                     }
-                    else if (linhas[y][x] == '*')
+                    else if (linhas[y][x] == 'M')
                     {
-                        sokoban = new Player(this, x, y);
-                        level[x, y] = ' '; // put a blank instead of the sokoban 'Y'
+                        player = new Player(game1, x, y);
+                        matrix[x, y] = ' '; // put a blank instead of the sokoban 'Y'
+                    }
+                    else if (linhas[y][x] == 'D')
+                    {
+                        Dynamite.Add(new Point(x, y));
+                        matrix[x, y] = ' ';
                     }
                     else
                     {
@@ -56,10 +56,54 @@ namespace DiamondMiner
                 }
             }
         }
+       
+        public void LoadLevelContent()
+        {
+            diamond = game1.Content.Load<Texture2D>("diamante");
+            //rocks = Content.Load<Texture2D>("pedra");
+            dirt = game1.Content.Load<Texture2D>("terra");
+            wall = game1.Content.Load<Texture2D>("muro");
+            //dynamite = Content.Load<Texture2D>("");
+        }
 
-        public void DrawLevel() //Goes to game1 draw
+        public void DrawLevel(GameTime gametime, SpriteBatch _spriteBatch ) //Goes to game1 draw
         {
 
+            Rectangle position = new Rectangle(0, 0, game1.tileSize, game1.tileSize); //Retangulo utilizado para desenhar as sprites,
+            for (int x = 0; x < matrix.GetLength(0); x++)
+            {
+                for (int y = 0; y < matrix.GetLength(1); y++)
+                {
+                    position.X = x * game1.tileSize; //aqui entao estamos a mudar a posicao em que os retangulos sao desenhados
+                    position.Y = y * game1.tileSize;
+                    switch (matrix[x, y])
+                    {
+                        case '$':
+                            _spriteBatch.Draw(diamond, position, Color.White);
+                            break;
+                        case 'D':
+                            _spriteBatch.Draw(dynamite, position, Color.White);
+                            break;
+                        case '#':
+                            _spriteBatch.Draw(wall, position, Color.White);
+                            break;
+                        case '.':
+                            _spriteBatch.Draw(dirt, position, Color.White);
+                            break;
+                        //case '*':
+                        //    game1._spriteBatch.Draw(rocks, position, Color.White);
+                        //    break;
+                    }
+                }
+            }
+
+            // Draw the diamonds
+            foreach (Point b in Diamonds)
+            {
+                position.X = b.X * game1.tileSize;
+                position.Y = b.Y * game1.tileSize;
+                _spriteBatch.Draw(diamond, position, Color.White);
+            }
         }
 
         public void UpdateLevel() //Goes to game1 update

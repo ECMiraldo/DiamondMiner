@@ -37,11 +37,6 @@
 /processorParam:TextureFormat=Color
 /build:jogador.png
 
-#begin Level1.txt
-/importer:
-/processor:
-/build:Level1.txt
-
 #begin muro.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -53,18 +48,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:muro.png
-
-#begin pedra.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:pedra.png
 
 #begin terra.png
 /importer:TextureImporter

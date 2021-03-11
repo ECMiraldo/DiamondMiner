@@ -12,10 +12,11 @@ namespace DiamondMiner
     public class Game1 : Game
     {
         private GraphicsDeviceManager _graphics;
-        private SpriteBatch _spriteBatch;
 
-        int tileSize = 32;
+        public  SpriteBatch _spriteBatch;
 
+        public int tileSize = 32;
+        private Level currentlevel;
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -26,15 +27,21 @@ namespace DiamondMiner
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            base.Initialize();
+            currentlevel = new Level(this, "Level1.txt");
+            _graphics.PreferredBackBufferHeight = tileSize * (1 + currentlevel.matrix.GetLength(1));
+            _graphics.PreferredBackBufferWidth = tileSize * currentlevel.matrix.GetLength(0);
             _graphics.ApplyChanges();
+
+            base.Initialize();
+
         }
 
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            
+
             // TODO: use this.Content to load your game content here
+            currentlevel.LoadLevelContent();
         }
 
         protected override void Update(GameTime gameTime)
@@ -51,8 +58,11 @@ namespace DiamondMiner
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
+            _spriteBatch.Begin();
             // TODO: Add your drawing code here
+            currentlevel.DrawLevel(gameTime, _spriteBatch);
 
+            _spriteBatch.End();
             base.Draw(gameTime);
         }
     }
