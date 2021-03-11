@@ -21,7 +21,8 @@ namespace DiamondMiner
         public List<Point> Dynamite;
 
        
-        public Level(Game1 game1, string levelFile) //Goes to game1 load
+        //Basicamente, tudo o que este construtor faz é prencher a matriz do level, e adicionar os Diamantes e Dynamites nas respectivas listas.
+        public Level(Game1 game1, string levelFile) //Goes to game1 Initialize
         {
             this.game1 = game1;
             Diamonds = new List<Point>();
@@ -37,12 +38,12 @@ namespace DiamondMiner
                     if (linhas[y][x] == '$')
                     {
                         Diamonds.Add(new Point(x, y));
-                        matrix[x, y] = ' '; // put a blank instead of the box '#'
+                        matrix[x, y] = ' '; // put a blank instead of the diamond ' '
                     }
                     else if (linhas[y][x] == 'M')
                     {
                         player = new Player(game1, x, y);
-                        matrix[x, y] = ' '; // put a blank instead of the sokoban 'Y'
+                        matrix[x, y] = ' '; // put a blank instead of the player 'Y'
                     }
                     else if (linhas[y][x] == 'D')
                     {
@@ -57,7 +58,7 @@ namespace DiamondMiner
             }
         }
        
-        public void LoadLevelContent()
+        public void LoadLevelContent() //Goes to game1 load
         {
             diamond = game1.Content.Load<Texture2D>("diamante");
             //rocks = Content.Load<Texture2D>("pedra");
@@ -109,6 +110,7 @@ namespace DiamondMiner
             }
         }
 
+        //Atualizar quando diamantes sao recolhidos, ou dinamites, quando o player mina uma celula, etc...
         public void UpdateLevel() //Goes to game1 update
         {
 

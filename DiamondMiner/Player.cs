@@ -27,7 +27,7 @@ namespace DiamondMiner
         int diamantes;
         int dinamites;
 
-        public Player(Game1 game1, int x, int y)
+        public Player(Game1 game1, int x, int y) //Construtor chamado no construtor do level. 
         {
             position = new Point(x, y);
             game1 = game1;
