@@ -12,8 +12,8 @@ namespace DiamondMiner
     public class Game1 : Game
     {
         private GraphicsDeviceManager _graphics;
-        private Level currentlevel;
-        private Player player;
+        public Level currentlevel;
+        public Player player;
 
 
         public  SpriteBatch _spriteBatch;
@@ -65,6 +65,7 @@ namespace DiamondMiner
             _spriteBatch.Begin();
             // TODO: Add your drawing code here
             currentlevel.DrawLevel(gameTime, _spriteBatch);
+            player.DrawPlayer(gameTime, _spriteBatch);
             //player.DrawPlayer(gameTime, _spriteBatch);
             _spriteBatch.End();
             base.Draw(gameTime);

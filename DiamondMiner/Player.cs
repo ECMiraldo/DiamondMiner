@@ -7,7 +7,7 @@ using System.Text;
 
 namespace DiamondMiner
 {
-    class Player 
+    public class Player 
     {
         enum Direction
         {
@@ -30,7 +30,7 @@ namespace DiamondMiner
         public Player(Game1 game1, int x, int y) //Construtor chamado no construtor do level. 
         {
             position = new Point(x, y);
-            game1 = game1;
+            this.game1 = game1;
         }
 
 
@@ -78,9 +78,18 @@ namespace DiamondMiner
 
         }
 
-        public void DrawPlayer(GameTime gameTime, SpriteBatch spriteBatch) //Goes to game1 draw
+        public void DrawPlayer(GameTime gameTime, SpriteBatch _spriteBatch) //Goes to game1 draw
         {
-
+            Rectangle position = new Rectangle(0, 0, game1.tileSize, game1.tileSize); //Retangulo utilizado para desenhar as sprites,
+            for (int x = 0; x < game1.currentlevel.matrix.GetLength(0); x++)
+            {
+                for (int y = 0; y < game1.currentlevel.matrix.GetLength(1); y++)
+                {
+                    position.X = x * game1.tileSize; //aqui entao estamos a mudar a posicao em que os retangulos sao desenhados
+                    position.Y = y * game1.tileSize;
+                    if (game1.currentlevel.matrix[x, y] == 'M') _spriteBatch.Draw(character, position, Color.White);
+                }
+            }
         }
 
         public void PlaceDinamite() //Goes to game1 update

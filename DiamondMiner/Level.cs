@@ -43,6 +43,7 @@ namespace DiamondMiner
                     else if (linhas[y][x] == 'M')
                     {
                         player = new Player(game1, x, y);
+                        game1.player = player;
                         matrix[x, y] = ' '; // put a blank instead of the player 'Y'
                     }
                     else if (linhas[y][x] == 'D')
@@ -90,9 +91,6 @@ namespace DiamondMiner
                             break;
                         case '.':
                             _spriteBatch.Draw(dirt, position, Color.White);
-                            break;
-                        case 'M':
-                            _spriteBatch.Draw(player.character, position, Color.White);
                             break;
                         //case '*':
                         //    game1._spriteBatch.Draw(rocks, position, Color.White);
