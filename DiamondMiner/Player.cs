@@ -13,8 +13,10 @@ namespace DiamondMiner
         {
             Up, Down, Left, Right
         }
+        public static Player _instance;
+        private Texture2D character;
         private Game1 game1;
-        public Texture2D character;
+        
 
         public char[,] level;
 
@@ -23,7 +25,7 @@ namespace DiamondMiner
         private Vector2 directionVector;
 
         private int delta = 0;
-        private int speed = 2;
+        private int speed = 4;
 
         int vidas;
         int diamantes;
@@ -31,48 +33,50 @@ namespace DiamondMiner
 
         public Player(Game1 game1, int x, int y) //Construtor chamado no construtor do level. 
         {
-            position = new Point(x, y);
+            if (_instance != null) throw new Exception("Player cons called twice");
+            _instance = this;
             this.game1 = game1;
+            position = new Point(x, y);
         }
 
 
-        public void LoadSprite() //Goes to game1 load
+        public static void LoadSprite() //Goes to game1 load
         {
-            character = game1.Content.Load<Texture2D>("jogador");
+            _instance.character = _instance.game1.Content.Load<Texture2D>("jogador");
         }
 
-        public void Movement(GameTime gameTime) //Goes to game1 update
+        public static void Movement(GameTime gameTime) //Goes to game1 update
         {
             KeyboardState kState = Keyboard.GetState();
-            Point lastPosition = position;
+            Point lastPosition = _instance.position;
 
             if (kState.IsKeyDown(Keys.A))
             {
-                position.X--;
-                direction = Direction.Left;
-                delta = speed;
-                directionVector = -Vector2.UnitX;
+                _instance.position.X--;
+                _instance.direction = Direction.Left;
+                _instance.delta = _instance.speed;
+                _instance.directionVector = -Vector2.UnitX;
             }
             else if (kState.IsKeyDown(Keys.W))
             {
-                position.Y--;
-                direction = Direction.Up;
-                delta = speed;
-                directionVector = -Vector2.UnitY;
+                _instance.position.Y--;
+                _instance.direction = Direction.Up;
+                _instance.delta = _instance.speed;
+                _instance.directionVector = -Vector2.UnitY;
             }
             else if (kState.IsKeyDown(Keys.S))
             {
-                position.Y++;
-                direction = Direction.Down;
-                delta = speed;
-                directionVector = Vector2.UnitY;
+                _instance.position.Y++;
+                _instance.direction = Direction.Down;
+                _instance.delta = _instance.speed;
+                _instance.directionVector = Vector2.UnitY;
             }
             else if (kState.IsKeyDown(Keys.D))
             {
-                position.X++;
-                direction = Direction.Right;
-                delta = speed;
-                directionVector = Vector2.UnitX;
+                _instance.position.X++;
+                _instance.direction = Direction.Right;
+                _instance.delta = _instance.speed;
+                _instance.directionVector = Vector2.UnitX;
             }
 
 
@@ -80,18 +84,23 @@ namespace DiamondMiner
 
         }
 
-        public void DrawPlayer(GameTime gameTime, SpriteBatch _spriteBatch) //Goes to game1 draw
+        public static void DrawPlayer(GameTime gameTime, SpriteBatch _spriteBatch) //Goes to game1 draw
         {
-            Rectangle position = new Rectangle(0, 0, game1.tileSize, game1.tileSize); //Retangulo utilizado para desenhar as sprites,
-            for (int x = 0; x < game1.currentlevel.matrix.GetLength(0); x++)
-            {
-                for (int y = 0; y < game1.currentlevel.matrix.GetLength(1); y++)
-                {
-                    position.X = x * game1.tileSize; //aqui entao estamos a mudar a posicao em que os retangulos sao desenhados
-                    position.Y = y * game1.tileSize;
-                    if (game1.currentlevel.matrix[x, y] == 'M') _spriteBatch.Draw(character, position, Color.White);
-                }
-            }
+            Rectangle pos = new Rectangle(_instance.position.X, _instance.position.Y, _instance.game1.tileSize, _instance.game1.tileSize);
+            _spriteBatch.Draw(_instance.character, pos, Color.White);
+            //Rectangle position = new Rectangle(0, 0, _instance.game1.tileSize, _instance.game1.tileSize); //Retangulo utilizado para desenhar as sprites,
+            //for (int x = 0; x < _instance.game1.currentlevel.matrix.GetLength(0); x++)
+            //{
+            //    for (int y = 0; y < _instance.game1.currentlevel.matrix.GetLength(1); y++)
+            //    {
+            //        position.X = x * _instance.game1.tileSize; //aqui entao estamos a mudar a posicao em que os retangulos sao desenhados
+            //        position.Y = y * _instance.game1.tileSize;
+            //        if (_instance.game1.currentlevel.matrix[x, y] == ' ')
+            //        {
+            //            _spriteBatch.Draw(_instance.character, position, Color.White);
+            //        }
+            //    }
+            //}
         }
 
         public void PlaceDinamite() //Goes to game1 update

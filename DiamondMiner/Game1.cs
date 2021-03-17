@@ -13,7 +13,6 @@ namespace DiamondMiner
     {
         private GraphicsDeviceManager _graphics;
         public Level currentlevel;
-        public Player player;
 
 
         public  SpriteBatch _spriteBatch;
@@ -44,7 +43,7 @@ namespace DiamondMiner
 
             // TODO: use this.Content to load your game content here
             currentlevel.LoadLevelContent();
-            player.LoadSprite();
+            Player.LoadSprite();
         }
 
         protected override void Update(GameTime gameTime)
@@ -53,7 +52,7 @@ namespace DiamondMiner
                 Exit();
 
             // TODO: Add your update logic here
-            player.Movement(gameTime);
+            Player.Movement(gameTime);
 
             base.Update(gameTime);
         }
@@ -65,8 +64,7 @@ namespace DiamondMiner
             _spriteBatch.Begin();
             // TODO: Add your drawing code here
             currentlevel.DrawLevel(gameTime, _spriteBatch);
-            player.DrawPlayer(gameTime, _spriteBatch);
-            //player.DrawPlayer(gameTime, _spriteBatch);
+            Player.DrawPlayer(gameTime, _spriteBatch);
             _spriteBatch.End();
             base.Draw(gameTime);
         }
