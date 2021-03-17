@@ -16,6 +16,8 @@ namespace DiamondMiner
         private Game1 game1;
         public Texture2D character;
 
+        public char[,] level;
+
         private Point position;
         private Direction direction;
         private Vector2 directionVector;
@@ -97,6 +99,10 @@ namespace DiamondMiner
 
         }
 
-
+        public bool CheckTerra(Point point)
+        {
+            if (level[point.X, point.Y] == '.') return true;
+            else return false;
+        }
     }
 }
