@@ -110,8 +110,7 @@ namespace DiamondMiner
 
         public bool CheckTerra(Point point)
         {
-            if (level[point.X, point.Y] == '.') return true;
-            else return false;
+            return (level[point.X, point.Y] == '.');
         }
     }
 }

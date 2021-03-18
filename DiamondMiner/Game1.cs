@@ -29,6 +29,8 @@ namespace DiamondMiner
         {
             // TODO: Add your initialization logic here
             currentlevel = new Level(this, "Level1.txt");
+
+
             _graphics.PreferredBackBufferHeight = tileSize * (1 + currentlevel.matrix.GetLength(1));
             _graphics.PreferredBackBufferWidth = tileSize * currentlevel.matrix.GetLength(0);
             _graphics.ApplyChanges();
@@ -44,6 +46,8 @@ namespace DiamondMiner
             // TODO: use this.Content to load your game content here
             currentlevel.LoadLevelContent();
             Player.LoadSprite();
+
+
         }
 
         protected override void Update(GameTime gameTime)
@@ -61,11 +65,14 @@ namespace DiamondMiner
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            _spriteBatch.Begin();
+
             // TODO: Add your drawing code here
+            _spriteBatch.Begin();
             currentlevel.DrawLevel(gameTime, _spriteBatch);
             Player.DrawPlayer(gameTime, _spriteBatch);
             _spriteBatch.End();
+
+
             base.Draw(gameTime);
         }
     }
