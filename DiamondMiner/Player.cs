@@ -90,6 +90,8 @@ namespace DiamondMiner
             _spriteBatch.Draw(_instance.character, pos, Color.White);
         }
 
+        //A ideia eu diria é ter dinamites no mapa, que o jogador apanha quando passa por cima e depois pode colocar ele ativo
+        //atravess da tecla E, por exemplo.
         public void PlaceDinamite() //Goes to game1 update
         {
 

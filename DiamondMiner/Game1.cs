@@ -56,7 +56,9 @@ namespace DiamondMiner
                 Exit();
 
             // TODO: Add your update logic here
+
             Player.Movement(gameTime);
+
 
             base.Update(gameTime);
         }
@@ -64,15 +66,17 @@ namespace DiamondMiner
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
+            _spriteBatch.Begin();
 
             // TODO: Add your drawing code here
-            _spriteBatch.Begin();
+
+
             currentlevel.DrawLevel(gameTime, _spriteBatch);
             Player.DrawPlayer(gameTime, _spriteBatch);
+
+
+
             _spriteBatch.End();
-
-
             base.Draw(gameTime);
         }
     }
