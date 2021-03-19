@@ -25,7 +25,7 @@ namespace DiamondMiner
         private Vector2 directionVector;
 
         private int delta = 0;
-        private int speed = 4;
+        private int speed = 1;
 
         int vidas;
         int diamantes;
@@ -86,21 +86,8 @@ namespace DiamondMiner
 
         public static void DrawPlayer(GameTime gameTime, SpriteBatch _spriteBatch) //Goes to game1 draw
         {
-            Rectangle pos = new Rectangle(_instance.position.X, _instance.position.Y, _instance.game1.tileSize, _instance.game1.tileSize);
+            Rectangle pos = new Rectangle(_instance.position.X*_instance.game1.tileSize, _instance.position.Y*_instance.game1.tileSize, _instance.game1.tileSize, _instance.game1.tileSize);
             _spriteBatch.Draw(_instance.character, pos, Color.White);
-            //Rectangle position = new Rectangle(0, 0, _instance.game1.tileSize, _instance.game1.tileSize); //Retangulo utilizado para desenhar as sprites,
-            //for (int x = 0; x < _instance.game1.currentlevel.matrix.GetLength(0); x++)
-            //{
-            //    for (int y = 0; y < _instance.game1.currentlevel.matrix.GetLength(1); y++)
-            //    {
-            //        position.X = x * _instance.game1.tileSize; //aqui entao estamos a mudar a posicao em que os retangulos sao desenhados
-            //        position.Y = y * _instance.game1.tileSize;
-            //        if (_instance.game1.currentlevel.matrix[x, y] == ' ')
-            //        {
-            //            _spriteBatch.Draw(_instance.character, position, Color.White);
-            //        }
-            //    }
-            //}
         }
 
         public void PlaceDinamite() //Goes to game1 update
