@@ -13,10 +13,10 @@ namespace DiamondMiner
         
         private Game1 game1;
         public char[,] matrix;
-        public string levelName;
         Texture2D diamond, rocks, dirt, dynamite, wall;
         private Player player;
 
+        public List<Point> Rocks;
         public List<Point> Diamonds;
         public List<Point> Dynamite;
 
@@ -49,6 +49,11 @@ namespace DiamondMiner
                         Dynamite.Add(new Point(x, y));
                         matrix[x, y] = ' ';
                     }
+                    else if (linhas[y][x] == '*')
+                    {
+                        Rocks.Add(new Point(x, y));
+                        matrix[x, y] = ' ';
+                    }
                     else
                     {
                         matrix[x, y] = linhas[y][x];
@@ -78,12 +83,6 @@ namespace DiamondMiner
                     position.Y = y * game1.tileSize;
                     switch (matrix[x, y])
                     {
-                        case '$':
-                            _spriteBatch.Draw(diamond, position, Color.White);
-                            break;
-                        case 'D':
-                            _spriteBatch.Draw(dynamite, position, Color.White);
-                            break;
                         case '#':
                             _spriteBatch.Draw(wall, position, Color.White);
                             break;
@@ -101,7 +100,45 @@ namespace DiamondMiner
                 position.Y = b.Y * game1.tileSize;
                 _spriteBatch.Draw(diamond, position, Color.White);
             }
+
+            // Draw the dynamites
+            foreach (Point d in Dynamite)
+            {
+                position.X = d.X * game1.tileSize;
+                position.Y = d.Y * game1.tileSize;
+                _spriteBatch.Draw(dynamite, position, Color.White);
+            }
+
+            //Draw the rocks
+            foreach(Point r in Rocks)
+            {
+                position.X = r.X * game1.tileSize;
+                position.Y = r.Y * game1.tileSize;
+                _spriteBatch.Draw(rocks, position, Color.White);
+            }
         }
+
+
+        public bool HasRock(int x, int y)
+        {
+            return Rocks.Contains(new Point(x, y));
+        }
+
+        public bool HasDynamite(int x, int y)
+        {
+            return Dynamite.Contains(new Point(x, y));
+        }
+
+        public bool HasDiamond(int x, int y)
+        {
+            return Diamonds.Contains(new Point(x, y));
+        }
+
+
+
+
+
+
 
         //Atualizar quando diamantes sao recolhidos, ou dinamites, quando o player mina uma celula, etc...
         public void UpdateLevel() //Goes to game1 update
