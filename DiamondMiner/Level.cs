@@ -121,26 +121,10 @@ namespace DiamondMiner
                 _spriteBatch.Draw(rocks, position, Color.White);
             }
         }
-
-
         public bool HasRock(Point p)     => Rocks.Contains(p);
         public bool HasWall(Point p)     => matrix[p.X, p.Y] == '#';
         public bool HasDynamite(Point p) => Dynamite.Contains(p);
         public bool HasDiamond(Point p)  => Diamonds.Contains(p);
         public bool FreeTile(Point p)    => (matrix[p.X, p.Y] == ' ' || matrix[p.X, p.Y] == '.');
-        
-
-
-
-
-
-
-
-        //Atualizar quando diamantes sao recolhidos, ou dinamites, quando o player mina uma celula, etc...
-        public void UpdateLevel() //Goes to game1 update
-        {
-
-        }
-
     }
 }

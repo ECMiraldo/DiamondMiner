@@ -26,28 +26,24 @@ namespace DiamondMiner
         }
 
         protected override void Initialize()
-        {
-            // TODO: Add your initialization logic here
+        { 
+            //Constructors
             currentlevel = new Level(this, "Level1.txt");
 
-
+            //Grahics config
             _graphics.PreferredBackBufferHeight = tileSize * (1 + currentlevel.matrix.GetLength(1));
             _graphics.PreferredBackBufferWidth = tileSize * currentlevel.matrix.GetLength(0);
             _graphics.ApplyChanges();
 
-            base.Initialize();
 
+            base.Initialize();
         }
 
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            // TODO: use this.Content to load your game content here
             currentlevel.LoadLevelContent();
             Player.LoadSprite();
-
-
         }
 
         protected override void Update(GameTime gameTime)
@@ -55,28 +51,20 @@ namespace DiamondMiner
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
-
-            Player.Movement(gameTime);
-
-
+            Player.Movement(gameTime); //Notice how player.movement actualizes level.draw
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+
+
             _spriteBatch.Begin();
-
-            // TODO: Add your drawing code here
-
-
-            currentlevel.DrawLevel(gameTime, _spriteBatch);
-            Player.DrawPlayer(gameTime, _spriteBatch);
-
-
-
+            currentlevel.DrawLevel (gameTime, _spriteBatch);
+                  Player.DrawPlayer(gameTime, _spriteBatch);
             _spriteBatch.End();
+
             base.Draw(gameTime);
         }
     }

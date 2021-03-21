@@ -57,12 +57,12 @@ namespace DiamondMiner
             else
             {
                 KeyboardState kState = Keyboard.GetState();
-                Point lastPosition   = _instance.position;
+                Point lastPosition = _instance.position;
                 if (kState.IsKeyDown(Keys.A))
                 {
                     _instance.position.X--;
-                    _instance.direction       = Direction.Left;
-                    _instance.delta           = _instance.speed;
+                    _instance.direction = Direction.Left;
+                    _instance.delta = _instance.speed;
                     _instance.directionVector = -Vector2.UnitX;
                 }
                 else if (kState.IsKeyDown(Keys.W))
@@ -116,8 +116,6 @@ namespace DiamondMiner
                     _instance.game1.currentlevel.matrix[_instance.position.X, _instance.position.Y] = ' ';
                 }
             }
-
-
         }
 
         public static void DrawPlayer(GameTime gameTime, SpriteBatch _spriteBatch) //Goes to game1 draw
@@ -131,11 +129,6 @@ namespace DiamondMiner
         public void PlaceDinamite() //Goes to game1 update
         {
 
-        }
-
-        public bool CheckTerra(Point point)
-        {
-            return (level[point.X, point.Y] == '.');
         }
     }
 }
