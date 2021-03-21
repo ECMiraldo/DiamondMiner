@@ -25,10 +25,14 @@ namespace DiamondMiner
         public Level(Game1 game1, string levelFile) //Goes to game1 Initialize
         {
             this.game1 = game1;
+
             Diamonds = new List<Point>();
+            Rocks    = new List<Point>();
+            Dynamite = new List<Point>();
+
             string[] linhas = File.ReadAllLines($"Content/{levelFile}");  // "Content/" + level
-            int nrLinhas = linhas.Length;
-            int nrColunas = linhas[0].Length;
+            int nrLinhas    = linhas.Length;
+            int nrColunas   = linhas[0].Length;
 
             matrix = new char[nrColunas, nrLinhas];
             for (int x = 0; x < nrColunas; x++)
@@ -64,11 +68,11 @@ namespace DiamondMiner
        
         public void LoadLevelContent() //Goes to game1 load
         {
-            diamond = game1.Content.Load<Texture2D>("diamante");
-            //rocks = Content.Load<Texture2D>("pedra");
-            dirt = game1.Content.Load<Texture2D>("terra");
-            wall = game1.Content.Load<Texture2D>("muro");
-            //dynamite = Content.Load<Texture2D>("");
+            diamond  = game1.Content.Load<Texture2D>("diamante");
+            rocks    = game1.Content.Load<Texture2D>("rock");
+            dirt     = game1.Content.Load<Texture2D>("terra");
+            wall     = game1.Content.Load<Texture2D>("muro");
+            dynamite = game1.Content.Load<Texture2D>("dynamite");
         }
 
         public void DrawLevel(GameTime gametime, SpriteBatch _spriteBatch ) //Goes to game1 draw

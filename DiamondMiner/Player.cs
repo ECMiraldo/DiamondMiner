@@ -25,7 +25,7 @@ namespace DiamondMiner
         private Vector2 directionVector;
 
         private int delta = 0;
-        private int speed = 1;
+        private int speed = 2;
 
         int vidas;
         int diamantes;
@@ -34,10 +34,10 @@ namespace DiamondMiner
         public Player(Game1 game1, int x, int y) //Construtor chamado no construtor do level. 
         {
             if (_instance != null) throw new Exception("Player cons called twice");
-            _instance = this;
-            this.game1 = game1;
-            position = new Point(x, y);
-        }
+            _instance      = this;
+            this.game1     = game1;
+            position       = new Point(x, y);
+        }  
 
 
         public static void LoadSprite() //Goes to game1 load
@@ -47,39 +47,45 @@ namespace DiamondMiner
 
         public static void Movement(GameTime gameTime) //Goes to game1 update
         {
-            KeyboardState kState = Keyboard.GetState();
-            Point lastPosition = _instance.position;
-
-            if (kState.IsKeyDown(Keys.A))
+            if (_instance.delta > 0)
             {
-                _instance.position.X--;
-                _instance.direction = Direction.Left;
-                _instance.delta = _instance.speed;
-                _instance.directionVector = -Vector2.UnitX;
-            }
-            else if (kState.IsKeyDown(Keys.W))
-            {
-                _instance.position.Y--;
-                _instance.direction = Direction.Up;
-                _instance.delta = _instance.speed;
-                _instance.directionVector = -Vector2.UnitY;
-            }
-            else if (kState.IsKeyDown(Keys.S))
-            {
-                _instance.position.Y++;
-                _instance.direction = Direction.Down;
-                _instance.delta = _instance.speed;
-                _instance.directionVector = Vector2.UnitY;
-            }
-            else if (kState.IsKeyDown(Keys.D))
-            {
-                _instance.position.X++;
-                _instance.direction = Direction.Right;
-                _instance.delta = _instance.speed;
-                _instance.directionVector = Vector2.UnitX;
+                _instance.delta = (_instance.delta + _instance.speed) % _instance.game1.tileSize;
             }
 
+            else
+            {
+                KeyboardState kState = Keyboard.GetState();
+                Point lastPosition   = _instance.position;
+                if (kState.IsKeyDown(Keys.A))
+                {
+                    _instance.position.X--;
+                    _instance.direction = Direction.Left;
+                    _instance.delta = _instance.speed;
+                    _instance.directionVector = -Vector2.UnitX;
+                }
+                else if (kState.IsKeyDown(Keys.W))
+                {
+                    _instance.position.Y--;
+                    _instance.direction = Direction.Up;
+                    _instance.delta = _instance.speed;
+                    _instance.directionVector = -Vector2.UnitY;
+                }
+                else if (kState.IsKeyDown(Keys.S))
+                {
+                    _instance.position.Y++;
+                    _instance.direction = Direction.Down;
+                    _instance.delta = _instance.speed;
+                    _instance.directionVector = Vector2.UnitY;
+                }
+                else if (kState.IsKeyDown(Keys.D))
+                {
+                    _instance.position.X++;
+                    _instance.direction = Direction.Right;
+                    _instance.delta = _instance.speed;
+                    _instance.directionVector = Vector2.UnitX;
+                }
 
+            }
 
 
         }
