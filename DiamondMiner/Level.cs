@@ -123,20 +123,12 @@ namespace DiamondMiner
         }
 
 
-        public bool HasRock(int x, int y)
-        {
-            return Rocks.Contains(new Point(x, y));
-        }
-
-        public bool HasDynamite(int x, int y)
-        {
-            return Dynamite.Contains(new Point(x, y));
-        }
-
-        public bool HasDiamond(int x, int y)
-        {
-            return Diamonds.Contains(new Point(x, y));
-        }
+        public bool HasRock(Point p)     => Rocks.Contains(p);
+        public bool HasWall(Point p)     => matrix[p.X, p.Y] == '#';
+        public bool HasDynamite(Point p) => Dynamite.Contains(p);
+        public bool HasDiamond(Point p)  => Diamonds.Contains(p);
+        public bool FreeTile(Point p)    => (matrix[p.X, p.Y] == ' ' || matrix[p.X, p.Y] == '.');
+        
 
 
 

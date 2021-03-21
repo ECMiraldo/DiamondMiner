@@ -28,7 +28,7 @@ namespace DiamondMiner
         private int speed = 2;
 
         int vidas;
-        int diamantes;
+        int diamonds;
         int dinamites;
 
         public Player(Game1 game1, int x, int y) //Construtor chamado no construtor do level. 
@@ -37,6 +37,11 @@ namespace DiamondMiner
             _instance      = this;
             this.game1     = game1;
             position       = new Point(x, y);
+
+
+            vidas     = 3;
+            diamonds  = 0;
+            dinamites = 0;
         }  
 
 
@@ -59,8 +64,8 @@ namespace DiamondMiner
                 if (kState.IsKeyDown(Keys.A))
                 {
                     _instance.position.X--;
-                    _instance.direction = Direction.Left;
-                    _instance.delta = _instance.speed;
+                    _instance.direction       = Direction.Left;
+                    _instance.delta           = _instance.speed;
                     _instance.directionVector = -Vector2.UnitX;
                 }
                 else if (kState.IsKeyDown(Keys.W))
@@ -85,6 +90,34 @@ namespace DiamondMiner
                     _instance.directionVector = Vector2.UnitX;
                 }
 
+                //Opcoes de destino:
+                // Destino = Pedra / Muro == no movement
+                // Destino = Diamante / dinamite == movement, coletar ponto
+                // Destino = terra = movement
+
+                // Se o Destino é pedra ou muro, nao pode mover.
+                if (_instance.game1.currentlevel.HasRock(_instance.position) || _instance.game1.currentlevel.HasWall(_instance.position))
+                {
+                    _instance.position.X = lastPosition.X;
+                    _instance.position.Y = lastPosition.Y;
+                }
+                // Se o destino é diamante, recolhe diamante e move
+                else if (_instance.game1.currentlevel.HasDiamond(_instance.position))
+                {
+                    _instance.game1.currentlevel.Diamonds.Remove(_instance.position);
+                    _instance.diamonds++;
+                }
+                // Se o destino é dynamite, recolhe dinamite e move
+                else if (_instance.game1.currentlevel.HasDynamite(_instance.position))
+                {
+                    _instance.game1.currentlevel.Diamonds.Remove(_instance.position);
+                    _instance.dinamites++;
+                }
+                // Se o destino é terra, entao retira a pedra
+                else if (_instance.game1.currentlevel.FreeTile(_instance.position))
+                {
+                    _instance.game1.currentlevel.matrix[_instance.position.X, _instance.position.Y] = ' ';
+                }
             }
 
 
