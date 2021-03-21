@@ -12,11 +12,11 @@ namespace DiamondMiner
     public class Game1 : Game
     {
         private GraphicsDeviceManager _graphics;
-        public Level currentlevel;
 
 
-        public  SpriteBatch _spriteBatch;
-        public int tileSize = 32;
+        public Level       currentlevel;
+        public SpriteBatch _spriteBatch;
+        public int         tileSize = 32;
         
         public Game1()
         {

@@ -10,12 +10,12 @@ namespace DiamondMiner
 {
     public class Level
     {
-        
-        private Game1 game1;
-        public char[,] matrix;
         Texture2D diamond, rocks, dirt, dynamite, wall;
+
+        private Game1  game1;
         private Player player;
 
+        public char[,]     matrix;
         public List<Point> Rocks;
         public List<Point> Diamonds;
         public List<Point> Dynamite;

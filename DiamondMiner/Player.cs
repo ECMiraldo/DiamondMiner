@@ -13,16 +13,13 @@ namespace DiamondMiner
         {
             Up, Down, Left, Right
         }
-        public static Player _instance;
-        private Texture2D character;
-        private Game1 game1;
+        public static Player    _instance;
+        private       Texture2D character;
+        private       Game1     game1;
         
-
-        public char[,] level;
-
-        private Point position;
+        private Point     position;
         private Direction direction;
-        private Vector2 directionVector;
+        private Vector2   directionVector;
 
         private int delta = 0;
         private int speed = 2;
