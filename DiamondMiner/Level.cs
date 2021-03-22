@@ -120,11 +120,28 @@ namespace DiamondMiner
                 position.Y = r.Y * game1.tileSize;
                 _spriteBatch.Draw(rocks, position, Color.White);
             }
+            // Rock Gravity
+
+            RockGravity();
         }
         public bool HasRock(Point p)     => Rocks.Contains(p);
         public bool HasWall(Point p)     => matrix[p.X, p.Y] == '#';
         public bool HasDynamite(Point p) => Dynamite.Contains(p);
         public bool HasDiamond(Point p)  => Diamonds.Contains(p);
         public bool FreeTile(Point p)    => (matrix[p.X, p.Y] == ' ' || matrix[p.X, p.Y] == '.');
+
+        public void RockGravity()
+        {
+            foreach (Point rock in Rocks)
+            {
+                Point aux = new Point(rock.X, rock.Y - 1);
+
+                if (FreeTile(aux)){  // ve se cada posicao abaixo de cada pedra esta livre
+                    Rocks.Remove(rock);
+                    Rocks.Add(aux);
+                }
+
+            }
+        }
     }
 }
