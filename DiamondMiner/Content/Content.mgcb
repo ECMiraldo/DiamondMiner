@@ -205,6 +205,18 @@
 /processorParam:TextureFormat=Color
 /build:gift_resized.png
 
+#begin gift_resized.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:gift_resized.png
+
 #begin ground_snow.png
 /importer:TextureImporter
 /processor:TextureProcessor
