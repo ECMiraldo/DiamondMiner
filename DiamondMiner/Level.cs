@@ -42,7 +42,7 @@ namespace DiamondMiner
                     if (linhas[y][x] == '$')
                     {
                         Diamonds.Add(new Point(x, y));
-                        matrix[x, y] = ' '; // put a blank instead of the diamond ' '
+                        //matrix[x, y] = ' '; // put a blank instead of the diamond ' '
                     }
                     else if (linhas[y][x] == 'M')
                     {
@@ -51,12 +51,12 @@ namespace DiamondMiner
                     else if (linhas[y][x] == 'D')
                     {
                         Dynamite.Add(new Point(x, y));
-                        matrix[x, y] = ' ';
+                        //matrix[x, y] = ' ';
                     }
                     else if (linhas[y][x] == '*')
                     {
                         Rocks.Add(new Point(x, y));
-                        matrix[x, y] = ' ';
+                        //matrix[x, y] = ' ';
                     }
                     else
                     {
@@ -112,36 +112,38 @@ namespace DiamondMiner
                 position.Y = d.Y * game1.tileSize;
                 _spriteBatch.Draw(dynamite, position, Color.White);
             }
-
-            //Draw the rocks
-            foreach(Point r in Rocks)
+            foreach (Point r in Rocks)
             {
                 position.X = r.X * game1.tileSize;
                 position.Y = r.Y * game1.tileSize;
                 _spriteBatch.Draw(rocks, position, Color.White);
             }
-            // Rock Gravity
-
-            RockGravity();
         }
+
         public bool HasRock(Point p)     => Rocks.Contains(p);
         public bool HasWall(Point p)     => matrix[p.X, p.Y] == '#';
         public bool HasDynamite(Point p) => Dynamite.Contains(p);
         public bool HasDiamond(Point p)  => Diamonds.Contains(p);
-        public bool FreeTile(Point p)    => (matrix[p.X, p.Y] == ' ' || matrix[p.X, p.Y] == '.');
-
-        public void RockGravity()
-        {
-            foreach (Point rock in Rocks)
-            {
-                Point aux = new Point(rock.X, rock.Y - 1);
-
-                if (FreeTile(aux)){  // ve se cada posicao abaixo de cada pedra esta livre
-                    Rocks.Remove(rock);
-                    Rocks.Add(aux);
-                }
-
-            }
+        public bool EmptyTile(Point p) {
+            if (InMatrix(p)) return matrix[p.X, p.Y] == ' ';
+            else return false;
         }
+        public bool DirtTile(Point p)    => (InMatrix(p) && (matrix[p.X, p.Y] == '.'));
+        public bool InMatrix(Point p)    => ((p.X >= 0 && p.Y >= 0) && (p.X < matrix.GetLength(0) && p.Y < matrix.GetLength(1)));
+
+        public void RockGravity(GameTime gametime)
+        {
+            for (int i = 0; i<Rocks.Count; i++)
+            {
+                if (InMatrix(Rocks[i]) && EmptyTile(Rocks[i]))
+                {
+                    Rocks[i] = new Point(Rocks[i].X, Rocks[i].Y + 1);
+                }
+            }
+            
+        }
+        
+
+
     }
 }

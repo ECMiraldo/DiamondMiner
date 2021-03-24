@@ -110,8 +110,8 @@ namespace DiamondMiner
                     _instance.game1.currentlevel.Diamonds.Remove(_instance.position);
                     _instance.dinamites++;
                 }
-                // Se o destino é terra, entao retira a pedra
-                else if (_instance.game1.currentlevel.FreeTile(_instance.position))
+                // Se o destino é terra, entao retira a terra
+                else if (_instance.game1.currentlevel.DirtTile(_instance.position))
                 {
                     _instance.game1.currentlevel.matrix[_instance.position.X, _instance.position.Y] = ' ';
                 }

@@ -52,6 +52,7 @@ namespace DiamondMiner
                 Exit();
 
             Player.Movement(gameTime); //Notice how player.movement actualizes level.draw
+            currentlevel.RockGravity(gameTime);
             base.Update(gameTime);
         }
 
