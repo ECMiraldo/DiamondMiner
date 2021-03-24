@@ -14,7 +14,7 @@ namespace DiamondMiner
             Up, Down, Left, Right
         }
         public static Player    _instance;
-        private       Texture2D character;
+        private       Texture2D[] character;
         private       Game1     game1;
         
         private Point     position;
@@ -44,7 +44,21 @@ namespace DiamondMiner
 
         public static void LoadSprite() //Goes to game1 load
         {
-            _instance.character = _instance.game1.Content.Load<Texture2D>("jogador");
+            _instance.character = new Texture2D[13];
+
+            _instance.character[0] = _instance.game1.Content.Load<Texture2D>("Walk (1)");
+            _instance.character[1] = _instance.game1.Content.Load<Texture2D>("Walk (2)");
+            _instance.character[2] = _instance.game1.Content.Load<Texture2D>("Walk (3)");
+            _instance.character[3] = _instance.game1.Content.Load<Texture2D>("Walk (4)");
+            _instance.character[4] = _instance.game1.Content.Load<Texture2D>("Walk (5)");
+            _instance.character[5] = _instance.game1.Content.Load<Texture2D>("Walk (6)");
+            _instance.character[6] = _instance.game1.Content.Load<Texture2D>("Walk (7)");
+            _instance.character[7] = _instance.game1.Content.Load<Texture2D>("Walk (8)");
+            _instance.character[8] = _instance.game1.Content.Load<Texture2D>("Walk (9)");
+            _instance.character[9] = _instance.game1.Content.Load<Texture2D>("Walk (10)");
+            _instance.character[10] = _instance.game1.Content.Load<Texture2D>("Walk (11)");
+            _instance.character[11] = _instance.game1.Content.Load<Texture2D>("Walk (12)");
+            _instance.character[12] = _instance.game1.Content.Load<Texture2D>("Walk (13)");
         }
 
         public static void Movement(GameTime gameTime) //Goes to game1 update
@@ -120,8 +134,36 @@ namespace DiamondMiner
 
         public static void DrawPlayer(GameTime gameTime, SpriteBatch _spriteBatch) //Goes to game1 draw
         {
-            Rectangle pos = new Rectangle(_instance.position.X*_instance.game1.tileSize, _instance.position.Y*_instance.game1.tileSize, _instance.game1.tileSize, _instance.game1.tileSize);
-            _spriteBatch.Draw(_instance.character, pos, Color.White);
+            float rotation = 0;
+            Vector2 scale = new Vector2(2, 2);
+            Vector2 origin = Vector2.Zero;
+
+
+            Vector2 pos = _instance.position.ToVector2() * _instance.game1.tileSize;
+            int frame = 0;
+            if (_instance.delta > 0)
+            {
+                pos -= (_instance.game1.tileSize - _instance.delta) * _instance.directionVector;
+                float animSpeed = 8f;
+                frame = (int)((_instance.delta / _instance.speed) / animSpeed);
+            }
+
+            if (_instance.direction == Direction.Right)
+            {
+                Rectangle rect = new Rectangle(pos.ToPoint(), new Point(_instance.game1.tileSize));
+                _spriteBatch.Draw(_instance.character[frame], rect, Color.White);
+            }
+            else if (_instance.direction == Direction.Left)
+            {
+                Rectangle rect = new Rectangle(pos.ToPoint(), new Point(_instance.game1.tileSize));
+                _spriteBatch.Draw(_instance.character[frame], rect, null, Color.White,rotation,origin,SpriteEffects.FlipHorizontally,0);
+            }
+            else
+            {
+                Rectangle rect = new Rectangle(pos.ToPoint(), new Point(_instance.game1.tileSize));
+                _spriteBatch.Draw(_instance.character[frame], rect, Color.White);
+            }
+
         }
 
         //A ideia eu diria é ter dinamites no mapa, que o jogador apanha quando passa por cima e depois pode colocar ele ativo
