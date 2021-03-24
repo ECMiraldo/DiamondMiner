@@ -68,9 +68,9 @@ namespace DiamondMiner
        
         public void LoadLevelContent() //Goes to game1 load
         {
-            diamond  = game1.Content.Load<Texture2D>("gift");
+            diamond  = game1.Content.Load<Texture2D>("gift_resized");
             rocks    = game1.Content.Load<Texture2D>("Stone");
-            dirt     = game1.Content.Load<Texture2D>("snowblock");
+            dirt     = game1.Content.Load<Texture2D>("ground_snow");
             wall     = game1.Content.Load<Texture2D>("IceBox");
             dynamite = game1.Content.Load<Texture2D>("candytnt");
         }
