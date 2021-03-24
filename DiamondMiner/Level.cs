@@ -68,11 +68,11 @@ namespace DiamondMiner
        
         public void LoadLevelContent() //Goes to game1 load
         {
-            diamond  = game1.Content.Load<Texture2D>("diamante");
+            diamond  = game1.Content.Load<Texture2D>("Gift");
             rocks    = game1.Content.Load<Texture2D>("rock");
             dirt     = game1.Content.Load<Texture2D>("terra");
             wall     = game1.Content.Load<Texture2D>("muro");
-            dynamite = game1.Content.Load<Texture2D>("dynamite");
+            dynamite = game1.Content.Load<Texture2D>("Gift");
         }
 
         public void DrawLevel(GameTime gametime, SpriteBatch _spriteBatch ) //Goes to game1 draw
