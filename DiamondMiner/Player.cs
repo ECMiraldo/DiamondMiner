@@ -22,7 +22,7 @@ namespace DiamondMiner
         private Vector2   directionVector;
 
         private int delta = 0;
-        private int speed = 2;
+        private int speed = 1;
 
         int vidas;
         int diamonds;
@@ -40,7 +40,6 @@ namespace DiamondMiner
             diamonds  = 0;
             dinamites = 0;
         }  
-
 
         public static void LoadSprite() //Goes to game1 load
         {
@@ -61,44 +60,48 @@ namespace DiamondMiner
             _instance.character[12] = _instance.game1.Content.Load<Texture2D>("Walk (13)");
         }
 
-        public static void Movement(GameTime gameTime) //Goes to game1 update
+        public static void Movement(GameTime gametime)
         {
-            if (_instance.delta > 0)
+            _instance.Movement2(gametime);
+        }
+        public void Movement2(GameTime gameTime) //Goes to game1 update
+        {
+            if (delta > 0)
             {
-                _instance.delta = (_instance.delta + _instance.speed) % _instance.game1.tileSize;
+                delta = (delta + speed) % game1.tileSize;
             }
 
             else
             {
                 KeyboardState kState = Keyboard.GetState();
-                Point lastPosition = _instance.position;
+                Point lastPosition = position;
                 if (kState.IsKeyDown(Keys.A))
                 {
-                    _instance.position.X--;
-                    _instance.direction = Direction.Left;
-                    _instance.delta = _instance.speed;
-                    _instance.directionVector = -Vector2.UnitX;
+                    position.X--;
+                    direction = Direction.Left;
+                    delta = speed;
+                    directionVector = -Vector2.UnitX;
                 }
                 else if (kState.IsKeyDown(Keys.W))
                 {
-                    _instance.position.Y--;
-                    _instance.direction = Direction.Up;
-                    _instance.delta = _instance.speed;
-                    _instance.directionVector = -Vector2.UnitY;
+                    position.Y--;
+                    direction = Direction.Up;
+                    delta = speed;
+                    directionVector = -Vector2.UnitY;
                 }
                 else if (kState.IsKeyDown(Keys.S))
                 {
-                    _instance.position.Y++;
-                    _instance.direction = Direction.Down;
-                    _instance.delta = _instance.speed;
-                    _instance.directionVector = Vector2.UnitY;
+                    position.Y++;
+                    direction = Direction.Down;
+                    delta = speed;
+                    directionVector = Vector2.UnitY;
                 }
                 else if (kState.IsKeyDown(Keys.D))
                 {
-                    _instance.position.X++;
-                    _instance.direction = Direction.Right;
-                    _instance.delta = _instance.speed;
-                    _instance.directionVector = Vector2.UnitX;
+                    position.X++;
+                    direction = Direction.Right;
+                    delta = speed;
+                    directionVector = Vector2.UnitX;
                 }
 
                 //Opcoes de destino:
@@ -107,65 +110,75 @@ namespace DiamondMiner
                 // Destino = terra = movement
 
                 // Se o Destino é pedra ou muro, nao pode mover.
-                if (_instance.game1.currentlevel.HasRock(_instance.position) || _instance.game1.currentlevel.HasWall(_instance.position))
+                if (game1.currentlevel.HasRock(position) || game1.currentlevel.HasWall(position))
                 {
-                    _instance.position.X = lastPosition.X;
-                    _instance.position.Y = lastPosition.Y;
+                    position.X = lastPosition.X;
+                    position.Y = lastPosition.Y;
                 }
                 // Se o destino é diamante, recolhe diamante e move
-                else if (_instance.game1.currentlevel.HasDiamond(_instance.position))
+                else if (game1.currentlevel.HasDiamond(position))
                 {
-                    _instance.game1.currentlevel.Diamonds.Remove(_instance.position);
-                    _instance.diamonds++;
+                    game1.currentlevel.Diamonds.Remove(position);
+                    diamonds++;
                 }
                 // Se o destino é dynamite, recolhe dinamite e move
-                else if (_instance.game1.currentlevel.HasDynamite(_instance.position))
+                else if (game1.currentlevel.HasDynamite(position))
                 {
-                    _instance.game1.currentlevel.Diamonds.Remove(_instance.position);
-                    _instance.dinamites++;
+                    game1.currentlevel.Diamonds.Remove(position);
+                    dinamites++;
                 }
                 // Se o destino é terra, entao retira a terra
-                else if (_instance.game1.currentlevel.DirtTile(_instance.position))
+                else if (game1.currentlevel.DirtTile(position))
                 {
-                    _instance.game1.currentlevel.matrix[_instance.position.X, _instance.position.Y] = ' ';
+                    game1.currentlevel.matrix[position.X, position.Y] = ' ';
                 }
+
+                TakeDamage(gameTime);
             }
         }
 
-        public static void DrawPlayer(GameTime gameTime, SpriteBatch _spriteBatch) //Goes to game1 draw
+
+        public static void DrawPlayer(GameTime gameTime, SpriteBatch _spritebatch)
+        {
+            _instance.DrawPlayer2(gameTime, _spritebatch);
+        }
+        public void DrawPlayer2(GameTime gameTime, SpriteBatch _spriteBatch) //Goes to game1 draw
         {
             float rotation = 0;
             Vector2 scale = new Vector2(2, 2);
             Vector2 origin = Vector2.Zero;
 
 
-            Vector2 pos = _instance.position.ToVector2() * _instance.game1.tileSize;
+            Vector2 pos = position.ToVector2() * game1.tileSize;
             int frame = 0;
-            if (_instance.delta > 0)
+            if (delta > 0)
             {
-                pos -= (_instance.game1.tileSize - _instance.delta) * _instance.directionVector;
-                float animSpeed = 8f;
-                frame = (int)((_instance.delta / _instance.speed) / animSpeed);
+                pos -= (game1.tileSize - delta) * directionVector;
+                float animSpeed = 4f;
+                frame = (int)((delta / speed) / animSpeed);
             }
-
-            if (_instance.direction == Direction.Right)
+            if (direction == Direction.Left)
             {
-                Rectangle rect = new Rectangle(pos.ToPoint(), new Point(_instance.game1.tileSize));
-                _spriteBatch.Draw(_instance.character[frame], rect, Color.White);
-            }
-            else if (_instance.direction == Direction.Left)
-            {
-                Rectangle rect = new Rectangle(pos.ToPoint(), new Point(_instance.game1.tileSize));
-                _spriteBatch.Draw(_instance.character[frame], rect, null, Color.White,rotation,origin,SpriteEffects.FlipHorizontally,0);
+                Rectangle rect = new Rectangle(pos.ToPoint(), new Point(game1.tileSize));
+                _spriteBatch.Draw(character[frame], rect, null, Color.White,rotation,origin,SpriteEffects.FlipHorizontally,0);
             }
             else
             {
-                Rectangle rect = new Rectangle(pos.ToPoint(), new Point(_instance.game1.tileSize));
-                _spriteBatch.Draw(_instance.character[frame], rect, Color.White);
+                Rectangle rect = new Rectangle(pos.ToPoint(), new Point(game1.tileSize));
+                _spriteBatch.Draw(character[frame], rect, Color.White);
             }
 
         }
 
+
+        public void TakeDamage(GameTime gameTime)
+        {
+
+            if (game1.currentlevel.Rocks.Contains(position))
+            {
+                vidas--;
+            }
+        }
         //A ideia eu diria é ter dinamites no mapa, que o jogador apanha quando passa por cima e depois pode colocar ele ativo
         //atravess da tecla E, por exemplo.
         public void PlaceDinamite() //Goes to game1 update

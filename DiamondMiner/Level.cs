@@ -68,7 +68,7 @@ namespace DiamondMiner
        
         public void LoadLevelContent() //Goes to game1 load
         {
-            diamond  = game1.Content.Load<Texture2D>("gift_resized");
+            diamond  = game1.Content.Load<Texture2D>("Gift");
             rocks    = game1.Content.Load<Texture2D>("Stone");
             dirt     = game1.Content.Load<Texture2D>("ground_snow");
             wall     = game1.Content.Load<Texture2D>("IceBox");
@@ -118,16 +118,15 @@ namespace DiamondMiner
                 position.Y = r.Y * game1.tileSize;
                 _spriteBatch.Draw(rocks, position, Color.White);
             }
+
+            
         }
 
         public bool HasRock(Point p)     => Rocks.Contains(p);
         public bool HasWall(Point p)     => matrix[p.X, p.Y] == '#';
         public bool HasDynamite(Point p) => Dynamite.Contains(p);
         public bool HasDiamond(Point p)  => Diamonds.Contains(p);
-        public bool EmptyTile(Point p) {
-            if (InMatrix(p)) return matrix[p.X, p.Y] == ' ';
-            else return false;
-        }
+        public bool EmptyTile(Point p)   => (InMatrix(p) &&  matrix[p.X, p.Y] == ' ');
         public bool DirtTile(Point p)    => (InMatrix(p) && (matrix[p.X, p.Y] == '.'));
         public bool InMatrix(Point p)    => ((p.X >= 0 && p.Y >= 0) && (p.X < matrix.GetLength(0) && p.Y < matrix.GetLength(1)));
 
@@ -135,9 +134,11 @@ namespace DiamondMiner
         {
             for (int i = 0; i<Rocks.Count; i++)
             {
-                if (InMatrix(Rocks[i]) && EmptyTile(Rocks[i]))
+                Point aux = new Point(Rocks[i].X, Rocks[i].Y + 1);
+                if (EmptyTile(aux))
                 {
-                    Rocks[i] = new Point(Rocks[i].X, Rocks[i].Y + 1);
+                    matrix[Rocks[i].X, Rocks[i].Y] = ' ';
+                    Rocks[i] = aux;
                 }
             }
             

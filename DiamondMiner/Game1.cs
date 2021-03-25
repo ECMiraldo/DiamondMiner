@@ -31,7 +31,7 @@ namespace DiamondMiner
             currentlevel = new Level(this, "Level1.txt");
 
             //Grahics config
-            _graphics.PreferredBackBufferHeight = tileSize * (1 + currentlevel.matrix.GetLength(1));
+            _graphics.PreferredBackBufferHeight = tileSize * ( + currentlevel.matrix.GetLength(1));
             _graphics.PreferredBackBufferWidth = tileSize * currentlevel.matrix.GetLength(0);
             _graphics.ApplyChanges();
 
