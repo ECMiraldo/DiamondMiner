@@ -14,8 +14,6 @@ namespace DiamondMiner
 
         private Game1  game1;
         private Player player;
-        //Criei estas variáveis para conseguir escrever no UI
-        public int tileSize = 32;
         private SpriteFont arial12;
 
         public char[,]     matrix;
@@ -76,7 +74,7 @@ namespace DiamondMiner
             dirt     = game1.Content.Load<Texture2D>("ground_snow");
             wall     = game1.Content.Load<Texture2D>("IceBox");
             dynamite = game1.Content.Load<Texture2D>("candytnt");
-            arial12 = game1.Content.Load<SpriteFont>("arial12");
+            arial12  = game1.Content.Load<SpriteFont>("arial12");
         }
 
         public void DrawLevel(GameTime gametime, SpriteBatch _spriteBatch ) //Goes to game1 draw
@@ -126,11 +124,11 @@ namespace DiamondMiner
             //Draw UI
             string diamondsUI =$"{ Diamonds.Count}";
             Point measure = arial12.MeasureString(diamondsUI).ToPoint();
-            int posX = matrix.GetLength(0) * tileSize - measure.X - 5;
+            int posX = matrix.GetLength(0) * game1.tileSize - measure.X - 5;
             _spriteBatch.DrawString(
                 arial12,
                 diamondsUI,
-                new Vector2(posX, matrix.GetLength(1) * tileSize + 10),
+                new Vector2(posX, matrix.GetLength(1) * game1.tileSize + 10),
                 Color.Coral);
         }
 
