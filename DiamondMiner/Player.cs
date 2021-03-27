@@ -46,16 +46,16 @@ namespace DiamondMiner
         {
             _instance.character = new Texture2D[13];
 
-            _instance.character[0] = _instance.game1.Content.Load<Texture2D>("Walk (1)");
-            _instance.character[1] = _instance.game1.Content.Load<Texture2D>("Walk (2)");
-            _instance.character[2] = _instance.game1.Content.Load<Texture2D>("Walk (3)");
-            _instance.character[3] = _instance.game1.Content.Load<Texture2D>("Walk (4)");
-            _instance.character[4] = _instance.game1.Content.Load<Texture2D>("Walk (5)");
-            _instance.character[5] = _instance.game1.Content.Load<Texture2D>("Walk (6)");
-            _instance.character[6] = _instance.game1.Content.Load<Texture2D>("Walk (7)");
-            _instance.character[7] = _instance.game1.Content.Load<Texture2D>("Walk (8)");
-            _instance.character[8] = _instance.game1.Content.Load<Texture2D>("Walk (9)");
-            _instance.character[9] = _instance.game1.Content.Load<Texture2D>("Walk (10)");
+            _instance.character[0]  = _instance.game1.Content.Load<Texture2D>("Walk (1)");
+            _instance.character[1]  = _instance.game1.Content.Load<Texture2D>("Walk (2)");
+            _instance.character[2]  = _instance.game1.Content.Load<Texture2D>("Walk (3)");
+            _instance.character[3]  = _instance.game1.Content.Load<Texture2D>("Walk (4)");
+            _instance.character[4]  = _instance.game1.Content.Load<Texture2D>("Walk (5)");
+            _instance.character[5]  = _instance.game1.Content.Load<Texture2D>("Walk (6)");
+            _instance.character[6]  = _instance.game1.Content.Load<Texture2D>("Walk (7)");
+            _instance.character[7]  = _instance.game1.Content.Load<Texture2D>("Walk (8)");
+            _instance.character[8]  = _instance.game1.Content.Load<Texture2D>("Walk (9)");
+            _instance.character[9]  = _instance.game1.Content.Load<Texture2D>("Walk (10)");
             _instance.character[10] = _instance.game1.Content.Load<Texture2D>("Walk (11)");
             _instance.character[11] = _instance.game1.Content.Load<Texture2D>("Walk (12)");
             _instance.character[12] = _instance.game1.Content.Load<Texture2D>("Walk (13)");
