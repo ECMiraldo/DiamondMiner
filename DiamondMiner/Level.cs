@@ -14,17 +14,21 @@ namespace DiamondMiner
 
         private Game1  game1;
         private SpriteFont arial12;
-
+        private double timer;
         public char[,]     matrix;
         public List<Point> Rocks;
         public List<Point> Diamonds;
         public List<Point> Dynamite;
 
+        private bool explosion;
+        private Point explosionPos;
        
         //Basicamente, tudo o que este construtor faz é prencher a matriz do level, e adicionar os Diamantes e Dynamites nas respectivas listas.
         public Level(Game1 game1, string levelFile) //Goes to game1 Initialize
         {
             this.game1 = game1;
+
+            explosion = false;
 
             Diamonds = new List<Point>();
             Rocks    = new List<Point>();
@@ -170,35 +174,42 @@ namespace DiamondMiner
             }
         }
 
+        public void PlaceDinamite(GameTime gameTime) //Goes to game1 update
+        {
+            KeyboardState kState = Keyboard.GetState();
+            if (kState.IsKeyDown(Keys.E))
+            {
+                timer = 0;
+                Player._instance.dinamites--;
+                Player._instance.game1.currentlevel.matrix[Player._instance.position.X, Player._instance.position.Y] = 'E';
+                explosion = true;
+                explosionPos = Player.GetPosition();
+                Console.WriteLine("E has been pressed");
+            }
+        }
+
         public void ExDynamite(GameTime gameTime)
         {
-            if (Player._instance.explosion == true)
+            if (explosion)   
             {
-                double timer = 0;
-                while (timer < 100)
-                {
-                    timer = timer + gameTime.ElapsedGameTime.TotalSeconds;
-                    Console.WriteLine(timer);
-                }
+                int x = explosionPos.X;
+                int y = explosionPos.Y;
+
+                timer = timer + gameTime.ElapsedGameTime.TotalSeconds;
                 Console.WriteLine(timer);
-
-                Point pos = Player.GetPosition();
-                int x = pos.X;
-                int y = pos.Y;
-
-                matrix[x, y] = ' ';
-                matrix[x - 1, y] = ' ';
-                matrix[x + 1, y] = ' ';
-                matrix[x, y - 1] = ' ';
-                matrix[x, y + 1] = ' ';
-                matrix[x + 1, y + 1] = ' ';
-                matrix[x - 1, y - 1] = ' ';
-                matrix[x + 1, y - 1] = ' ';
-                matrix[x - 1, y + 1] = ' ';
-
-
-                
-                Player._instance.explosion = false;
+                if (timer > 2.5f)
+                {
+                    matrix[x, y] = ' ';
+                    matrix[x - 1, y] = ' ';
+                    matrix[x + 1, y] = ' ';
+                    matrix[x, y - 1] = ' ';
+                    matrix[x, y + 1] = ' ';
+                    matrix[x + 1, y + 1] = ' ';
+                    matrix[x - 1, y - 1] = ' ';
+                    matrix[x + 1, y - 1] = ' ';
+                    matrix[x - 1, y + 1] = ' ';
+                    timer = 0;
+                } 
             }
             
         }

@@ -19,9 +19,9 @@ namespace DiamondMiner
         public static Player    _instance;
         public bool explosion;
         private       Texture2D[] character;
-        private       Game1     game1;
+        public       Game1     game1;
         
-        private Point     position;
+        public  Point     position;
         private Direction direction;
         private Vector2   directionVector;
 
@@ -30,7 +30,7 @@ namespace DiamondMiner
 
         int vidas;
         int diamonds;
-        int dinamites;
+        public int dinamites;
         
 
         public Player(Game1 game1, int x, int y) //Construtor chamado no construtor do level. 
@@ -186,18 +186,7 @@ namespace DiamondMiner
         }
         //A ideia eu diria é ter dinamites no mapa, que o jogador apanha quando passa por cima e depois pode colocar ele ativo
         //atravess da tecla E, por exemplo.
-        public static void PlaceDinamite(GameTime gameTime) //Goes to game1 update
-        {
-            KeyboardState kState = Keyboard.GetState();
- 
-            if (kState.IsKeyDown(Keys.E))
-            {
-                _instance.dinamites--;
-                _instance.game1.currentlevel.matrix[_instance.position.X, _instance.position.Y] = 'E';
-                _instance.explosion = true;
-                Console.WriteLine("E has been pressed");
-            }
-        }
+       
 
         public static Point GetPosition()
         {
