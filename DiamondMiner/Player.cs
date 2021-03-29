@@ -194,13 +194,9 @@ namespace DiamondMiner
             {
                 _instance.dinamites--;
                 _instance.game1.currentlevel.matrix[_instance.position.X, _instance.position.Y] = 'E';
+                _instance.explosion = true;
+                Console.WriteLine("E has been pressed");
             }
-        }
-
-        public static void TheBombHasBeenPlanted(GameTime gameTime)
-        {
-            KeyboardState kState = Keyboard.GetState();
-            if (kState.IsKeyDown(Keys.E)) _instance.explosion = true;
         }
 
         public static Point GetPosition()

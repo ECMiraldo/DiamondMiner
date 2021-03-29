@@ -13,7 +13,6 @@ namespace DiamondMiner
         Texture2D diamond, rocks, dirt, dynamite, wall;
 
         private Game1  game1;
-        private Player player;
         private SpriteFont arial12;
 
         public char[,]     matrix;
@@ -176,25 +175,29 @@ namespace DiamondMiner
             if (Player._instance.explosion == true)
             {
                 double timer = 0;
-                timer = timer + gameTime.ElapsedGameTime.TotalSeconds;
-                if (timer > 3f)
+                while (timer < 100)
                 {
-                    Point pos = Player.GetPosition();
-                    int x = pos.X;
-                    int y = pos.Y;
-
-                    matrix[x, y] = ' ';
-                    matrix[x - 1, y] = ' ';
-                    matrix[x + 1, y] = ' ';
-                    matrix[x, y - 1] = ' ';
-                    matrix[x, y + 1] = ' ';
-                    matrix[x + 1, y + 1] = ' ';
-                    matrix[x - 1, y - 1] = ' ';
-                    matrix[x + 1, y - 1] = ' ';
-                    matrix[x - 1, y + 1] = ' ';
-
-
+                    timer = timer + gameTime.ElapsedGameTime.TotalSeconds;
+                    Console.WriteLine(timer);
                 }
+                Console.WriteLine(timer);
+
+                Point pos = Player.GetPosition();
+                int x = pos.X;
+                int y = pos.Y;
+
+                matrix[x, y] = ' ';
+                matrix[x - 1, y] = ' ';
+                matrix[x + 1, y] = ' ';
+                matrix[x, y - 1] = ' ';
+                matrix[x, y + 1] = ' ';
+                matrix[x + 1, y + 1] = ' ';
+                matrix[x - 1, y - 1] = ' ';
+                matrix[x + 1, y - 1] = ' ';
+                matrix[x - 1, y + 1] = ' ';
+
+
+                
                 Player._instance.explosion = false;
             }
             
