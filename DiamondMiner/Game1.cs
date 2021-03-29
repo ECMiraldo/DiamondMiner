@@ -53,6 +53,9 @@ namespace DiamondMiner
 
             Player.Movement(gameTime); //Notice how player.movement actualizes level.draw
             currentlevel.RockGravity(gameTime);
+            Player.PlaceDinamite(gameTime);
+            Player.TheBombHasBeenPlanted(gameTime);
+            currentlevel.ExDynamite(gameTime);
             base.Update(gameTime);
         }
 

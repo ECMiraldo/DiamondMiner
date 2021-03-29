@@ -138,7 +138,7 @@ namespace DiamondMiner
         public bool HasDiamond(Point p)  => Diamonds.Contains(p);
         public bool EmptyTile(Point p)   => (InMatrix(p) &&  matrix[p.X, p.Y] == ' ');
         public bool DirtTile(Point p)    => (InMatrix(p) && (matrix[p.X, p.Y] == '.'));
-        public bool InMatrix(Point p) => ((p.X >= 0 && p.Y >= 0) && (p.X < matrix.GetLength(0) && p.Y < matrix.GetLength(1));
+        public bool InMatrix(Point p) => ((p.X >= 0 && p.Y >= 0) && (p.X < matrix.GetLength(0) && p.Y < matrix.GetLength(1)));
         public void RockGravity(GameTime gametime)
         {
             for (int i = 0; i < Rocks.Count; i++)
@@ -171,9 +171,38 @@ namespace DiamondMiner
             }
         }
 
+        public void ExDynamite(GameTime gameTime)
+        {
+            if (Player._instance.explosion == true)
+            {
+                double timer = 0;
+                timer = timer + gameTime.ElapsedGameTime.TotalSeconds;
+                if (timer > 3f)
+                {
+                    Point pos = Player.GetPosition();
+                    int x = pos.X;
+                    int y = pos.Y;
+
+                    matrix[x, y] = ' ';
+                    matrix[x - 1, y] = ' ';
+                    matrix[x + 1, y] = ' ';
+                    matrix[x, y - 1] = ' ';
+                    matrix[x, y + 1] = ' ';
+                    matrix[x + 1, y + 1] = ' ';
+                    matrix[x - 1, y - 1] = ' ';
+                    matrix[x + 1, y - 1] = ' ';
+                    matrix[x - 1, y + 1] = ' ';
+
+
+                }
+                Player._instance.explosion = false;
+            }
+            
+        }
+
+    }
 
 
 
+} 
 
-    } 
-}

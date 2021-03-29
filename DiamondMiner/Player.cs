@@ -4,6 +4,9 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
+using System.Timers;
+
 
 namespace DiamondMiner
 {
@@ -14,6 +17,7 @@ namespace DiamondMiner
             Up, Down, Left, Right
         }
         public static Player    _instance;
+        public bool explosion;
         private       Texture2D[] character;
         private       Game1     game1;
         
@@ -35,7 +39,7 @@ namespace DiamondMiner
             _instance      = this;
             this.game1     = game1;
             position       = new Point(x, y);
-
+            explosion = false;
 
             vidas     = 3;
             diamonds  = 0;
@@ -182,9 +186,26 @@ namespace DiamondMiner
         }
         //A ideia eu diria é ter dinamites no mapa, que o jogador apanha quando passa por cima e depois pode colocar ele ativo
         //atravess da tecla E, por exemplo.
-        public void PlaceDinamite() //Goes to game1 update
+        public static void PlaceDinamite(GameTime gameTime) //Goes to game1 update
         {
+            KeyboardState kState = Keyboard.GetState();
+ 
+            if (kState.IsKeyDown(Keys.E))
+            {
+                _instance.dinamites--;
+                _instance.game1.currentlevel.matrix[_instance.position.X, _instance.position.Y] = 'E';
+            }
+        }
 
+        public static void TheBombHasBeenPlanted(GameTime gameTime)
+        {
+            KeyboardState kState = Keyboard.GetState();
+            if (kState.IsKeyDown(Keys.E)) _instance.explosion = true;
+        }
+
+        public static Point GetPosition()
+        {
+            return _instance.position;
         }
     }
 }
