@@ -44,7 +44,7 @@ namespace DiamondMiner
 
             vidas     = 3;
             diamonds  = 0;
-            dinamites = 0;
+            dinamites = 1;
         }  
 
         public static void LoadSprite() //Goes to game1 load

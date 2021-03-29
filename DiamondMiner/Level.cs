@@ -22,13 +22,14 @@ namespace DiamondMiner
 
         private bool explosion;
         private Point explosionPos;
-       
+        private bool CPUswitch;
         //Basicamente, tudo o que este construtor faz é prencher a matriz do level, e adicionar os Diamantes e Dynamites nas respectivas listas.
         public Level(Game1 game1, string levelFile) //Goes to game1 Initialize
         {
             this.game1 = game1;
 
             explosion = false;
+            CPUswitch = true;
 
             Diamonds = new List<Point>();
             Rocks    = new List<Point>();
@@ -141,7 +142,7 @@ namespace DiamondMiner
         public bool HasDiamond(Point p)  => Diamonds.Contains(p);
         public bool EmptyTile(Point p)   => (InMatrix(p) &&  matrix[p.X, p.Y] == ' ');
         public bool DirtTile(Point p)    => (InMatrix(p) && (matrix[p.X, p.Y] == '.'));
-        public bool InMatrix(Point p) => ((p.X >= 0 && p.Y >= 0) && (p.X < matrix.GetLength(0) && p.Y < matrix.GetLength(1)));
+        public bool InMatrix(Point p)    => ((p.X >= 0 && p.Y >= 0) && (p.X < matrix.GetLength(0) && p.Y < matrix.GetLength(1)));
         public void RockGravity(GameTime gametime)
         {
             for (int i = 0; i < Rocks.Count; i++)
@@ -183,31 +184,32 @@ namespace DiamondMiner
                 Player._instance.dinamites--;
                 Player._instance.game1.currentlevel.matrix[Player._instance.position.X, Player._instance.position.Y] = 'E';
                 explosion = true;
-                explosionPos = Player.GetPosition();
+                explosionPos = Player.GetPosition();         
             }
         }
 
         public void ExDynamite(GameTime gameTime)
         {
-            if (explosion)   
+            if (explosion)
             {
                 int x = explosionPos.X;
                 int y = explosionPos.Y;
 
-                
-                timer = timer + gameTime.ElapsedGameTime.TotalSeconds;
 
+                timer = timer + gameTime.ElapsedGameTime.TotalSeconds;
+                Console.Write(timer);
                 List<Point> ExplosionRadius = new List<Point>();
                 ExplosionRadius.Add(new Point(x, y));
-                ExplosionRadius.Add(new Point(x-1, y));
-                ExplosionRadius.Add(new Point(x+1, y));
-                ExplosionRadius.Add(new Point(x, y+1));
-                ExplosionRadius.Add(new Point(x, y-1));
-                ExplosionRadius.Add(new Point(x+1, y+1));
-                ExplosionRadius.Add(new Point(x-1, y-1));
-                ExplosionRadius.Add(new Point(x+1, y-1));
-                ExplosionRadius.Add(new Point(x-1, y+1));
+                ExplosionRadius.Add(new Point(x - 1, y));
+                ExplosionRadius.Add(new Point(x + 1, y));
+                ExplosionRadius.Add(new Point(x, y + 1));
+                ExplosionRadius.Add(new Point(x, y - 1));
+                ExplosionRadius.Add(new Point(x + 1, y + 1));
+                ExplosionRadius.Add(new Point(x - 1, y - 1));
+                ExplosionRadius.Add(new Point(x + 1, y - 1));
+                ExplosionRadius.Add(new Point(x - 1, y + 1));
                 if (ExplosionRadius.Contains(Player._instance.position)) Player._instance.vidas--;
+
                 if (timer > 2.5f)
                 {
                     foreach (Point p in ExplosionRadius)
@@ -215,9 +217,9 @@ namespace DiamondMiner
                         matrix[p.X, p.Y] = ' ';
                     }
                     timer = 0;
+                    CPUswitch = false;
                 }
             }
-            
         }
 
         public bool WinCondition()
