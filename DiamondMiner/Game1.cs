@@ -15,6 +15,8 @@ namespace DiamondMiner
 
 
         public Level       currentlevel;
+        private string[] totalLevels = { "Level2.txt", "Level1.txt" };
+        public int level = 0;
         public SpriteBatch _spriteBatch;
         public int         tileSize = 32;
         
@@ -28,7 +30,7 @@ namespace DiamondMiner
         protected override void Initialize()
         { 
             //Constructors
-            currentlevel = new Level(this, "Level1.txt");
+            currentlevel = new Level(this, totalLevels[level]);
 
             //Grahics config
             _graphics.PreferredBackBufferHeight = tileSize * ( + currentlevel.matrix.GetLength(1));
@@ -50,7 +52,7 @@ namespace DiamondMiner
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
+            if (currentlevel.WinCondition()) Exit();
             Player.Movement(gameTime); //Notice how player.movement actualizes level.draw
             currentlevel.RockGravity(gameTime);
             currentlevel.PlaceDinamite(gameTime);

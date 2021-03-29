@@ -16,9 +16,10 @@ namespace DiamondMiner
         {
             Up, Down, Left, Right
         }
+
         public static Player    _instance;
         public bool explosion;
-        private       Texture2D[] character;
+        private       Texture2D[] character, explosoes;
         public       Game1     game1;
         
         public  Point     position;
@@ -63,6 +64,21 @@ namespace DiamondMiner
             _instance.character[10] = _instance.game1.Content.Load<Texture2D>("Walk (11)");
             _instance.character[11] = _instance.game1.Content.Load<Texture2D>("Walk (12)");
             _instance.character[12] = _instance.game1.Content.Load<Texture2D>("Walk (13)");
+        }
+
+        public static void LoadExplosions()
+        {
+            _instance.explosoes = new Texture2D[9];
+
+            _instance.explosoes[0] = _instance.game1.Content.Load<Texture2D>("explosion1");
+            _instance.explosoes[1] = _instance.game1.Content.Load<Texture2D>("explosion2");
+            _instance.explosoes[2] = _instance.game1.Content.Load<Texture2D>("explosion3");
+            _instance.explosoes[3] = _instance.game1.Content.Load<Texture2D>("explosion4");
+            _instance.explosoes[4] = _instance.game1.Content.Load<Texture2D>("explosion5");
+            _instance.explosoes[5] = _instance.game1.Content.Load<Texture2D>("explosion6");
+            _instance.explosoes[6] = _instance.game1.Content.Load<Texture2D>("explosion7");
+            _instance.explosoes[7] = _instance.game1.Content.Load<Texture2D>("explosion8");
+            _instance.explosoes[8] = _instance.game1.Content.Load<Texture2D>("explosion9");
         }
 
         public static void Movement(GameTime gametime)
