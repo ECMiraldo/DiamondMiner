@@ -29,8 +29,8 @@ namespace DiamondMiner
         private int delta = 0;
         private int speed = 1;
 
-        int vidas;
-        int diamonds;
+        public int vidas;
+        public int diamonds;
         public int dinamites;
         
 

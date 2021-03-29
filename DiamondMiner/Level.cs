@@ -177,14 +177,13 @@ namespace DiamondMiner
         public void PlaceDinamite(GameTime gameTime) //Goes to game1 update
         {
             KeyboardState kState = Keyboard.GetState();
-            if (kState.IsKeyDown(Keys.E))
+            if (kState.IsKeyDown(Keys.E) && Player._instance.dinamites > 0)
             {
                 timer = 0;
                 Player._instance.dinamites--;
                 Player._instance.game1.currentlevel.matrix[Player._instance.position.X, Player._instance.position.Y] = 'E';
                 explosion = true;
                 explosionPos = Player.GetPosition();
-                Console.WriteLine("E has been pressed");
             }
         }
 
@@ -195,21 +194,28 @@ namespace DiamondMiner
                 int x = explosionPos.X;
                 int y = explosionPos.Y;
 
+                
                 timer = timer + gameTime.ElapsedGameTime.TotalSeconds;
-                Console.WriteLine(timer);
+
+                List<Point> ExplosionRadius = new List<Point>();
+                ExplosionRadius.Add(new Point(x, y));
+                ExplosionRadius.Add(new Point(x-1, y));
+                ExplosionRadius.Add(new Point(x+1, y));
+                ExplosionRadius.Add(new Point(x, y+1));
+                ExplosionRadius.Add(new Point(x, y-1));
+                ExplosionRadius.Add(new Point(x+1, y+1));
+                ExplosionRadius.Add(new Point(x-1, y-1));
+                ExplosionRadius.Add(new Point(x+1, y-1));
+                ExplosionRadius.Add(new Point(x-1, y+1));
+                if (ExplosionRadius.Contains(Player._instance.position)) Player._instance.vidas--;
                 if (timer > 2.5f)
                 {
-                    matrix[x, y] = ' ';
-                    matrix[x - 1, y] = ' ';
-                    matrix[x + 1, y] = ' ';
-                    matrix[x, y - 1] = ' ';
-                    matrix[x, y + 1] = ' ';
-                    matrix[x + 1, y + 1] = ' ';
-                    matrix[x - 1, y - 1] = ' ';
-                    matrix[x + 1, y - 1] = ' ';
-                    matrix[x - 1, y + 1] = ' ';
+                    foreach (Point p in ExplosionRadius)
+                    {
+                        matrix[p.X, p.Y] = ' ';
+                    }
                     timer = 0;
-                } 
+                }
             }
             
         }
