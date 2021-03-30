@@ -135,6 +135,7 @@ namespace DiamondMiner
                 {
                     position.X = lastPosition.X;
                     position.Y = lastPosition.Y;
+                    delta = 0;
                 }
                 // Se o destino é diamante, recolhe diamante e move
                 else if (game1.currentlevel.HasDiamond(position))
