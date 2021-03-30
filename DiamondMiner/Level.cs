@@ -162,16 +162,26 @@ namespace DiamondMiner
             }
 
             //Draw UI
-            string diamondsUI =$"{ Diamonds.Count}";
+            //present
+            string diamondsUI = $"{ Diamonds.Count}";
             Point measure = arial12.MeasureString(diamondsUI).ToPoint();
             int posX = matrix.GetLength(0) * game1.tileSize - measure.X - 5;
-            int posX2 = matrix.GetLength(0) * game1.tileSize - measure.X - 34;
             _spriteBatch.DrawString(
                 arial12,
                 diamondsUI,
                 new Vector2(posX, matrix.GetLength(1) * game1.tileSize - 15),
                 Color.Coral);
+            int posX2 = matrix.GetLength(0) * game1.tileSize - measure.X - 34;
             _spriteBatch.Draw(presentUI, new Vector2(posX2, matrix.GetLength(1) * game1.tileSize - 20), Color.DarkRed);
+
+            //lifes
+            string lifesUI = $"{ Player._instance.GetVidas()}";
+            int posX3 = matrix.GetLength(0) * game1.tileSize - measure.X - 55;
+            _spriteBatch.DrawString(
+                arial12,
+                lifesUI,
+                new Vector2(posX3, matrix.GetLength(1) * game1.tileSize - 15),
+                Color.Coral);
         }
 
         public bool HasRock(Point p)     => Rocks.Contains(p);
