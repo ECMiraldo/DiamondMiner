@@ -43,6 +43,27 @@
     <None Update="Content\bin\DesktopGL\dynamite.xnb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Content\bin\DesktopGL\Explosao1.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\bin\DesktopGL\Explosao2.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\bin\DesktopGL\Explosao3.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\bin\DesktopGL\Explosao4.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\bin\DesktopGL\Explosao5.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\bin\DesktopGL\Explosao6.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\bin\DesktopGL\Explosao7.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Content\bin\DesktopGL\explosion1.xnb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

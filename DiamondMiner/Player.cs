@@ -26,7 +26,7 @@ namespace DiamondMiner
         private Direction direction;
         private Vector2   directionVector;
 
-        private int delta = 0;
+        public int delta = 0;
         private int speed = 1;
 
         public int vidas;
