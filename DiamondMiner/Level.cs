@@ -10,7 +10,7 @@ namespace DiamondMiner
 {
     public class Level
     {
-        Texture2D diamond, rocks, dirt, dynamite, wall;
+        Texture2D diamond, rocks, dirt, dynamite, wall, presentUI;
 
         private Game1  game1;
         private SpriteFont arial12;
@@ -79,6 +79,7 @@ namespace DiamondMiner
             wall     = game1.Content.Load<Texture2D>("IceBox");
             dynamite = game1.Content.Load<Texture2D>("candytnt");
             arial12  = game1.Content.Load<SpriteFont>("arial12");
+            presentUI = game1.Content.Load<Texture2D>("Gift");
         }
 
         public void DrawLevel(GameTime gametime, SpriteBatch _spriteBatch ) //Goes to game1 draw
@@ -129,11 +130,13 @@ namespace DiamondMiner
             string diamondsUI =$"{ Diamonds.Count}";
             Point measure = arial12.MeasureString(diamondsUI).ToPoint();
             int posX = matrix.GetLength(0) * game1.tileSize - measure.X - 5;
+            int posX2 = matrix.GetLength(0) * game1.tileSize - measure.X - 34;
             _spriteBatch.DrawString(
                 arial12,
                 diamondsUI,
-                new Vector2(posX, matrix.GetLength(1) * game1.tileSize + 10),
+                new Vector2(posX, matrix.GetLength(1) * game1.tileSize - 15),
                 Color.Coral);
+            _spriteBatch.Draw(presentUI, new Vector2(posX2, matrix.GetLength(1) * game1.tileSize - 20), Color.DarkRed);
         }
 
         public bool HasRock(Point p)     => Rocks.Contains(p);
