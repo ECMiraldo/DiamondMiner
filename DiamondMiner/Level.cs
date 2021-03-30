@@ -10,7 +10,8 @@ namespace DiamondMiner
 {
     public class Level
     {
-        private Texture2D diamond, rocks, dirt, dynamite, wall;
+
+        private Texture2D diamond, rocks, dirt, dynamite, wall, presentUI;
         private Texture2D[] explosionAnim;
 
         private Game1  game1;
@@ -74,24 +75,29 @@ namespace DiamondMiner
        
         public void LoadLevelContent() //Goes to game1 load
         {
-            diamond  = game1.Content.Load<Texture2D>("Gift");
-            rocks    = game1.Content.Load<Texture2D>("Stone");
-            dirt     = game1.Content.Load<Texture2D>("ground_snow");
-            wall     = game1.Content.Load<Texture2D>("IceBox");
-            dynamite = game1.Content.Load<Texture2D>("candytnt");
-            arial12  = game1.Content.Load<SpriteFont>("arial12");
-           
-            explosionAnim[0] = game1.Content.Load<Texture2D>("explosion1");
-            explosionAnim[1] = game1.Content.Load<Texture2D>("explosion2");
-            explosionAnim[2] = game1.Content.Load<Texture2D>("explosion3");
-            explosionAnim[3] = game1.Content.Load<Texture2D>("explosion4");
-            explosionAnim[4] = game1.Content.Load<Texture2D>("explosion5");
-            explosionAnim[5] = game1.Content.Load<Texture2D>("explosion6");
-            explosionAnim[6] = game1.Content.Load<Texture2D>("explosion7");
-            explosionAnim[7] = game1.Content.Load<Texture2D>("explosion8");
-            explosionAnim[8] = game1.Content.Load<Texture2D>("explosion9");
-            explosionAnim[9] = game1.Content.Load<Texture2D>("explosion10");
+            diamond   = game1.Content.Load<Texture2D>("Gift");
+            rocks     = game1.Content.Load<Texture2D>("Stone");
+            dirt      = game1.Content.Load<Texture2D>("ground_snow");
+            wall      = game1.Content.Load<Texture2D>("IceBox");
+            dynamite  = game1.Content.Load<Texture2D>("candytnt");
+            arial12   = game1.Content.Load<SpriteFont>("arial12");
+            presentUI = game1.Content.Load<Texture2D>("Gift");
+
+
+            explosionAnim[0]  = game1.Content.Load<Texture2D>("explosion1");
+            explosionAnim[1]  = game1.Content.Load<Texture2D>("explosion2");
+            explosionAnim[2]  = game1.Content.Load<Texture2D>("explosion3");
+            explosionAnim[3]  = game1.Content.Load<Texture2D>("explosion4");
+            explosionAnim[4]  = game1.Content.Load<Texture2D>("explosion5");
+            explosionAnim[5]  = game1.Content.Load<Texture2D>("explosion6");
+            explosionAnim[6]  = game1.Content.Load<Texture2D>("explosion7");
+            explosionAnim[7]  = game1.Content.Load<Texture2D>("explosion8");
+            explosionAnim[8]  = game1.Content.Load<Texture2D>("explosion9");
+            explosionAnim[9]  = game1.Content.Load<Texture2D>("explosion10");
             explosionAnim[10] = game1.Content.Load<Texture2D>("explosion11");
+
+            presentUI = game1.Content.Load<Texture2D>("Gift");
+
         }
 
         public void DrawLevel(GameTime gametime, SpriteBatch _spriteBatch ) //Goes to game1 draw
@@ -159,11 +165,13 @@ namespace DiamondMiner
             string diamondsUI =$"{ Diamonds.Count}";
             Point measure = arial12.MeasureString(diamondsUI).ToPoint();
             int posX = matrix.GetLength(0) * game1.tileSize - measure.X - 5;
+            int posX2 = matrix.GetLength(0) * game1.tileSize - measure.X - 34;
             _spriteBatch.DrawString(
                 arial12,
                 diamondsUI,
-                new Vector2(posX, matrix.GetLength(1) * game1.tileSize + 10),
+                new Vector2(posX, matrix.GetLength(1) * game1.tileSize - 15),
                 Color.Coral);
+            _spriteBatch.Draw(presentUI, new Vector2(posX2, matrix.GetLength(1) * game1.tileSize - 20), Color.DarkRed);
         }
 
         public bool HasRock(Point p)     => Rocks.Contains(p);
