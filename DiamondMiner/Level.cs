@@ -58,7 +58,7 @@ namespace DiamondMiner
                     }
                     else if (linhas[y][x] == 'M')
                     {
-                        new Player(game1, x, y);
+                        Player._instance.position = new Point(x, y);
                         matrix[x,y] = ' '; 
                     }
                     else if (linhas[y][x] == 'D')
@@ -216,6 +216,11 @@ namespace DiamondMiner
                         Point left = new Point(Down.X - 1, Down.Y);
                         if (EmptyTile(left))
                         {
+                            if (left == Player._instance.position)
+                            {
+                                Player._instance.position.Y -= 1;
+                                Player._instance.vidas--;
+                            }
                             rockvec = Vector2.UnitY - Vector2.UnitX;
                             Rocks[i] = Rocks[i] + rockvec.ToPoint();
                             delta = speed;
@@ -225,6 +230,11 @@ namespace DiamondMiner
                         Point right = new Point(Down.X + 1, Down.Y);
                         if (EmptyTile(right))
                         {
+                            if (right == Player._instance.position)
+                            {
+                                Player._instance.position.Y -= 1;
+                                Player._instance.vidas--;
+                            }
                             rockvec = Vector2.UnitY + Vector2.UnitX;
                             Rocks[i] = rockvec.ToPoint();
                             delta = speed;
@@ -234,6 +244,11 @@ namespace DiamondMiner
                     }
                     else if (EmptyTile(Down)) //se nao houver terra em baixo ela cai
                     {
+                        if (Down == Player._instance.position)
+                        {
+                            Player._instance.position.Y -= 1;
+                            Player._instance.vidas--;
+                        }
                         rockvec = Vector2.UnitY;
                         Rocks[i] = Rocks[i] + rockvec.ToPoint();
                         delta = speed;
@@ -278,10 +293,9 @@ namespace DiamondMiner
                 ExplosionRadius.Add(new Point(x - 1, y - 1));
                 ExplosionRadius.Add(new Point(x + 1, y - 1));
                 ExplosionRadius.Add(new Point(x - 1, y + 1));
-                if (ExplosionRadius.Contains(Player._instance.position)) Player._instance.vidas--;
-
                 if (timer > 2.5f)
                 {
+                    if (ExplosionRadius.Contains(Player._instance.position)) Player._instance.vidas--;
                     foreach (Point p in ExplosionRadius)
                     {
                         matrix[p.X, p.Y] = ' ';

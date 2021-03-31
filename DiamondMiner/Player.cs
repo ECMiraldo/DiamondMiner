@@ -32,15 +32,15 @@ namespace DiamondMiner
         public int vidas;
         public int diamonds;
         public int dinamites;
-        
 
-        public Player(Game1 game1, int x, int y) //Construtor chamado no construtor do level. 
+
+        public Player(Game1 game) //Construtor chamado no construtor do level. 
         {
             if (_instance != null) throw new Exception("Player cons called twice");
             _instance      = this;
-            this.game1     = game1;
-            position       = new Point(x, y);
-            explosion = false;
+            this.game1     = game;
+            position       = new Point(0, 0);  //Default pos
+            explosion      = false;
 
             vidas     = 3;
             diamonds  = 0;
@@ -158,8 +158,6 @@ namespace DiamondMiner
                 {
                     game1.currentlevel.matrix[position.X, position.Y] = ' ';
                 }
-
-                TakeDamage(gameTime);
             }
         }
 
@@ -193,32 +191,12 @@ namespace DiamondMiner
                 Rectangle rect = new Rectangle(pos.ToPoint(), new Point(game1.tileSize));
                 _spriteBatch.Draw(character[frame], rect, Color.White);
             }
-
-            if (TakeDamage(gameTime))
-            {
-                
-            }
-
-        }
-
-
-        public bool TakeDamage(GameTime gameTime)
-        {
-            if (game1.currentlevel.Rocks.Contains(position))
-            {
-                vidas--;
-                return true;
-            }
-            else return false;
         }
 
         public int GetVidas()
         {
             return vidas;
         }
-        //A ideia eu diria é ter dinamites no mapa, que o jogador apanha quando passa por cima e depois pode colocar ele ativo
-        //atravess da tecla E, por exemplo.
-
 
         public static Point GetPosition()
         {
