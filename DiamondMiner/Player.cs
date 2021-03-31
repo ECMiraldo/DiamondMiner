@@ -125,6 +125,11 @@ namespace DiamondMiner
                     directionVector = Vector2.UnitX;
                 }
 
+                if (!game1.currentlevel.InMatrix(position))
+                {
+                    position = lastPosition;
+                    delta = 0;
+                }
                 //Opcoes de destino:
                 // Destino = Pedra / Muro == no movement
                 // Destino = Diamante / dinamite == movement, coletar ponto
@@ -133,8 +138,7 @@ namespace DiamondMiner
                 // Se o Destino é pedra ou muro, nao pode mover.
                 if (game1.currentlevel.HasRock(position) || game1.currentlevel.HasWall(position))
                 {
-                    position.X = lastPosition.X;
-                    position.Y = lastPosition.Y;
+                    position = lastPosition;
                     delta = 0;
                 }
                 // Se o destino é diamante, recolhe diamante e move
@@ -190,16 +194,22 @@ namespace DiamondMiner
                 _spriteBatch.Draw(character[frame], rect, Color.White);
             }
 
+            if (TakeDamage(gameTime))
+            {
+                
+            }
+
         }
 
 
-        public void TakeDamage(GameTime gameTime)
+        public bool TakeDamage(GameTime gameTime)
         {
-
             if (game1.currentlevel.Rocks.Contains(position))
             {
                 vidas--;
+                return true;
             }
+            else return false;
         }
         //A ideia eu diria é ter dinamites no mapa, que o jogador apanha quando passa por cima e depois pode colocar ele ativo
         //atravess da tecla E, por exemplo.

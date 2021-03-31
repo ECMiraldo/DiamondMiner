@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Timers;
+
 
 namespace DiamondMiner
 {
@@ -21,6 +23,10 @@ namespace DiamondMiner
         public List<Point> Rocks;
         public List<Point> Diamonds;
         public List<Point> Dynamite;
+
+        int delta = 0;
+        int speed = 8;
+        private Vector2 rockvec;
 
         private bool explosion;
         private Point explosionPos;
@@ -137,11 +143,13 @@ namespace DiamondMiner
                 position.Y = d.Y * game1.tileSize;
                 _spriteBatch.Draw(dynamite, position, Color.White);
             }
+            //rocks
             foreach (Point r in Rocks)
             {
-                position.X = r.X * game1.tileSize;
-                position.Y = r.Y * game1.tileSize;
-                _spriteBatch.Draw(rocks, position, Color.White);
+                Point pixelpos = r; pixelpos.X = pixelpos.X * game1.tileSize; pixelpos.Y = pixelpos.Y * game1.tileSize;
+                Rectangle rect = new Rectangle(pixelpos, new Point(game1.tileSize));
+                _spriteBatch.Draw(rocks, rect, Color.White);
+
             }
 
             //explosion
@@ -183,32 +191,46 @@ namespace DiamondMiner
         public bool InMatrix(Point p)    => ((p.X >= 0 && p.Y >= 0) && (p.X < matrix.GetLength(0) && p.Y < matrix.GetLength(1)));
         public void RockGravity(GameTime gametime)
         {
-            for (int i = 0; i < Rocks.Count; i++)
+            if (delta > 0)
             {
-                Point origin = new Point(Rocks[i].X, Rocks[i].Y);
-                Point aux = new Point(Rocks[i].X, Rocks[i].Y + 1);
-                if (HasRock(aux) || HasDiamond(aux) || HasDynamite(aux))
+                delta = (delta + speed) % game1.tileSize;
+            }
+            else
+            {
+                for (int i = 0; i < Rocks.Count; i++)
                 {
-                    Point left = new Point(aux.X - 1, aux.Y);
-                    if (EmptyTile(left))
+                    Point origin = Rocks[i];
+                    Point Down = new Point(Rocks[i].X, Rocks[i].Y + 1);
+                    if (HasRock(Down) || HasDiamond(Down) || HasDynamite(Down))
                     {
-                        matrix[Rocks[i].X, Rocks[i].Y] = ' '; //a tila dela faz update para ficar vazia
-                        Rocks[i] = left;                       //Atualizamos a lista para o novo ponto dessa pedra
+                        Point left = new Point(Down.X - 1, Down.Y);
+                        if (EmptyTile(left))
+                        {
+                            rockvec = Vector2.UnitY - Vector2.UnitX;
+                            Rocks[i] = Rocks[i] + rockvec.ToPoint();
+                            delta = speed;
+                            matrix[origin.X, origin.Y] = ' ';
+                            matrix[Rocks[i].X, Rocks[i].Y] = '*';
+                        }
+                        Point right = new Point(Down.X + 1, Down.Y);
+                        if (EmptyTile(right))
+                        {
+                            rockvec = Vector2.UnitY + Vector2.UnitX;
+                            Rocks[i] = rockvec.ToPoint();
+                            delta = speed;
+                            matrix[origin.X, origin.Y] = ' ';
+                            matrix[Rocks[i].X, Rocks[i].Y] = '*';
+                        }
+                    }
+                    else if (EmptyTile(Down)) //se nao houver terra em baixo ela cai
+                    {
+                        rockvec = Vector2.UnitY;
+                        Rocks[i] = Rocks[i] + rockvec.ToPoint();
+                        delta = speed;
+                        matrix[origin.X, origin.Y] = ' ';
                         matrix[Rocks[i].X, Rocks[i].Y] = '*';
                     }
-                    Point right = new Point(aux.X + 1, aux.Y);
-                    if(EmptyTile(right))
-                    {
-                        matrix[Rocks[i].X, Rocks[i].Y] = ' '; //a tila dela faz update para ficar vazia
-                        Rocks[i] = right;                       //Atualizamos a lista para o novo ponto dessa pedra
-                        matrix[Rocks[i].X, Rocks[i].Y] = '*';
-                    }
-                }
-                else if (EmptyTile(aux)) //se nao houver terra em baixo ela cai
-                {
-                    matrix[Rocks[i].X, Rocks[i].Y] = ' '; //a tila dela faz update para ficar vazia
-                    Rocks[i] = aux;                       //Atualizamos a lista para o novo ponto dessa pedra
-                    matrix[Rocks[i].X, Rocks[i].Y] = '*'; // nesse novo ponto o nivel fica com a pedra
+                    
                 }
             }
         }
