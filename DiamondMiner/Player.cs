@@ -211,9 +211,14 @@ namespace DiamondMiner
             }
             else return false;
         }
+
+        public int GetVidas()
+        {
+            return vidas;
+        }
         //A ideia eu diria é ter dinamites no mapa, que o jogador apanha quando passa por cima e depois pode colocar ele ativo
         //atravess da tecla E, por exemplo.
-       
+
 
         public static Point GetPosition()
         {
