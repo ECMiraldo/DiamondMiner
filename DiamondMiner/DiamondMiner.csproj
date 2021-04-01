@@ -106,6 +106,9 @@
     <None Update="Content\Level1.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Content\Level2.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Content\Stone.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
