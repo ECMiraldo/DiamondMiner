@@ -20,6 +20,8 @@ namespace DiamondMiner
         public static Player    _instance;
         public bool explosion;
         private Texture2D[] character;
+        private Texture2D[] dieAnim;
+        private double DieAnimFrame = 0;
         public       Game1     game1;
         
         public  Point     position;
@@ -50,6 +52,7 @@ namespace DiamondMiner
         public static void LoadSprite() //Goes to game1 load
         {
             _instance.character = new Texture2D[13];
+            _instance.dieAnim = new Texture2D[17];
 
             _instance.character[0]  = _instance.game1.Content.Load<Texture2D>("Walk (1)");
             _instance.character[1]  = _instance.game1.Content.Load<Texture2D>("Walk (2)");
@@ -64,11 +67,30 @@ namespace DiamondMiner
             _instance.character[10] = _instance.game1.Content.Load<Texture2D>("Walk (11)");
             _instance.character[11] = _instance.game1.Content.Load<Texture2D>("Walk (12)");
             _instance.character[12] = _instance.game1.Content.Load<Texture2D>("Walk (13)");
+
+            _instance.dieAnim[0]  = _instance.game1.Content.Load<Texture2D>("Dead (1)");
+            _instance.dieAnim[1]  = _instance.game1.Content.Load<Texture2D>("Dead (2)");
+            _instance.dieAnim[2]  = _instance.game1.Content.Load<Texture2D>("Dead (3)");
+            _instance.dieAnim[3]  = _instance.game1.Content.Load<Texture2D>("Dead (4)");
+            _instance.dieAnim[4]  = _instance.game1.Content.Load<Texture2D>("Dead (5)");
+            _instance.dieAnim[5]  = _instance.game1.Content.Load<Texture2D>("Dead (6)");
+            _instance.dieAnim[6]  = _instance.game1.Content.Load<Texture2D>("Dead (7)");
+            _instance.dieAnim[7]  = _instance.game1.Content.Load<Texture2D>("Dead (8)");
+            _instance.dieAnim[8]  = _instance.game1.Content.Load<Texture2D>("Dead (9)");
+            _instance.dieAnim[9]  = _instance.game1.Content.Load<Texture2D>("Dead (10)");
+            _instance.dieAnim[10] = _instance.game1.Content.Load<Texture2D>("Dead (11)");
+            _instance.dieAnim[11] = _instance.game1.Content.Load<Texture2D>("Dead (12)");
+            _instance.dieAnim[12] = _instance.game1.Content.Load<Texture2D>("Dead (13)");
+            _instance.dieAnim[13] = _instance.game1.Content.Load<Texture2D>("Dead (14)");
+            _instance.dieAnim[14] = _instance.game1.Content.Load<Texture2D>("Dead (15)");
+            _instance.dieAnim[15] = _instance.game1.Content.Load<Texture2D>("Dead (16)");
+            _instance.dieAnim[16] = _instance.game1.Content.Load<Texture2D>("Dead (17)");
         }
 
         public static void Movement(GameTime gametime)
         {
-            _instance.Movement2(gametime);
+            if (_instance.vidas > 0)_instance.Movement2(gametime);
+
         }
         public void Movement2(GameTime gameTime) //Goes to game1 update
         {
@@ -152,30 +174,47 @@ namespace DiamondMiner
         }
         public void DrawPlayer2(GameTime gameTime, SpriteBatch _spriteBatch) //Goes to game1 draw
         {
-            float rotation = 0;
-            Vector2 scale = new Vector2(2, 2);
-            Vector2 origin = Vector2.Zero;
-
-
-            Vector2 pos = position.ToVector2() * game1.tileSize;
-            int frame = 0;
-            if (delta > 0)
+            if (vidas != 0)
             {
-                pos -= (game1.tileSize - delta) * directionVector;
-                float animSpeed = 4f;
-                frame = (int)((delta / speed) / animSpeed);
+                float rotation = 0;
+                Vector2 scale = new Vector2(2, 2);
+                Vector2 origin = Vector2.Zero;
+                Vector2 pos = position.ToVector2() * game1.tileSize;
+                int frame = 0;
+                if (delta > 0)
+                {
+                    pos -= (game1.tileSize - delta) * directionVector;
+                    float animSpeed = 4f;
+                    frame = (int)((delta / speed) / animSpeed);
+                }
+                if (direction == Direction.Left)
+                {
+                    Rectangle rect = new Rectangle(pos.ToPoint(), new Point(game1.tileSize));
+                    _spriteBatch.Draw(character[frame], rect, null, Color.White, rotation, origin, SpriteEffects.FlipHorizontally, 0);
+                }
+                else
+                {
+                    Rectangle rect = new Rectangle(pos.ToPoint(), new Point(game1.tileSize));
+                    _spriteBatch.Draw(character[frame], rect, Color.White);
+                }
             }
-            if (direction == Direction.Left)
-            {
-                Rectangle rect = new Rectangle(pos.ToPoint(), new Point(game1.tileSize));
-                _spriteBatch.Draw(character[frame], rect, null, Color.White,rotation,origin,SpriteEffects.FlipHorizontally,0);
-            }
-            else
-            {
-                Rectangle rect = new Rectangle(pos.ToPoint(), new Point(game1.tileSize));
-                _spriteBatch.Draw(character[frame], rect, Color.White);
-            }
+            //else
+            //{
+            //    DrawDeath(gameTime, _spriteBatch);
+            //}
         }
+
+        //public void DrawDeath(GameTime gameTime, SpriteBatch spriteBatch)
+        //{
+        //    DieAnimFrame = 1.08 * DieAnimFrame;
+
+        //    if (DieAnimFrame < 18)
+        //    {
+        //        Rectangle rect = new Rectangle(_instance.position, new Point(game1.tileSize));
+        //        spriteBatch.Draw(dieAnim[(int)DieAnimFrame], rect, Color.White);
+        //        Console.WriteLine(dieAnim[(int)DieAnimFrame]);
+        //    }
+        //}
 
         public int GetVidas()
         {

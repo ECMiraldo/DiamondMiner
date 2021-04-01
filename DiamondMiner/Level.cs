@@ -146,7 +146,7 @@ namespace DiamondMiner
             //rocks
             foreach (Point r in Rocks)
             {
-                Point pixelpos = r; pixelpos.X = pixelpos.X * game1.tileSize; pixelpos.Y = pixelpos.Y * game1.tileSize;
+                Point pixelpos = r; pixelpos.X = game1.tileSize * pixelpos.X ; pixelpos.Y = game1.tileSize* pixelpos.Y;
                 Rectangle rect = new Rectangle(pixelpos, new Point(game1.tileSize));
                 _spriteBatch.Draw(rocks, rect, Color.White);
 

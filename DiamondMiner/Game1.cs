@@ -54,11 +54,11 @@ namespace DiamondMiner
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             if (currentlevel.WinCondition()) Exit();
-            if (Player._instance.vidas == 0)
-            {
-                Initialize();
-                Player._instance.vidas = 3;
-            }
+            //if (Player._instance.vidas == 0)
+            //{
+            //    Initialize();
+            //    Player._instance.vidas = 3;
+            //}
             Player.Movement(gameTime); //Notice how player.movement actualizes level.draw
             currentlevel.RockGravity(gameTime);
             currentlevel.PlaceDinamite(gameTime);
