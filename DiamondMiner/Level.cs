@@ -124,6 +124,9 @@ namespace DiamondMiner
                         case '.':
                             _spriteBatch.Draw(dirt, position, Color.White);
                             break;
+                        case 'E':
+                            _spriteBatch.Draw(dynamite, position, Color.White);
+                            break;
                     }
                 }
             }
@@ -298,10 +301,12 @@ namespace DiamondMiner
                     if (ExplosionRadius.Contains(Player._instance.position)) Player._instance.vidas--;
                     foreach (Point p in ExplosionRadius)
                     {
+                        matrix[x, y] = ' ';
                         matrix[p.X, p.Y] = ' ';
                         explosion = false;
                     }
                     ExplosionRadius.Clear();
+
                 }
             }
         }
