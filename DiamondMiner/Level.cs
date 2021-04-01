@@ -161,15 +161,16 @@ namespace DiamondMiner
                 Point pos = new Point((explosionPos.X - 1) * game1.tileSize, (explosionPos.Y - 1) * game1.tileSize);
                 Rectangle rect = new Rectangle(pos, new Point(game1.tileSize * 3));
                 
-                if (timer > 2.5)
+                if (timer >= 2.5)
                 {
-                    timer = 1.02 * timer;
+                    timer = 1.06 * timer;
+                    Console.WriteLine(timer + 20);
                     if (timer < 11)
-                    {
-                        Console.Write(timer);
+                    { 
                         _spriteBatch.Draw(explosionAnim[(int)timer], rect, null, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0);
-
+                        
                     }
+                    else explosion = false;
                 }
             }
 
@@ -286,7 +287,6 @@ namespace DiamondMiner
 
 
                 timer = timer + gameTime.ElapsedGameTime.TotalSeconds;
-                Console.Write(timer);
                 List<Point> ExplosionRadius = new List<Point>();
                 ExplosionRadius.Add(new Point(x, y));
                 ExplosionRadius.Add(new Point(x - 1, y));
@@ -304,10 +304,9 @@ namespace DiamondMiner
                     {
                         matrix[x, y] = ' ';
                         matrix[p.X, p.Y] = ' ';
-                        explosion = false;
+                        
                     }
-                    ExplosionRadius.Clear();
-
+                    if (timer > 5) ExplosionRadius.Clear();
                 }
             }
         }
