@@ -299,7 +299,9 @@ namespace DiamondMiner
                     foreach (Point p in ExplosionRadius)
                     {
                         matrix[p.X, p.Y] = ' ';
+                        explosion = false;
                     }
+                    ExplosionRadius.Clear();
                 }
             }
         }
