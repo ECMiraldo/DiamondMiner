@@ -146,7 +146,6 @@ namespace DiamondMiner
             }
         }
 
-
         public static void DrawPlayer(GameTime gameTime, SpriteBatch _spritebatch)
         {
             _instance.DrawPlayer2(gameTime, _spritebatch);

@@ -25,7 +25,7 @@ namespace DiamondMiner
         public List<Point> Dynamite;
 
         int delta = 0;
-        int speed = 8;
+        int speed = 2;
         private Vector2 rockvec;
 
         private bool explosion;
