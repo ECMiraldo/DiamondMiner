@@ -21,7 +21,7 @@ namespace DiamondMiner
         public bool explosion;
         private Texture2D[] character;
         private Texture2D[] dieAnim;
-        private double DieAnimFrame = 0;
+        private double DieAnimFrame = 1;
         public       Game1     game1;
         
         public  Point     position;
@@ -198,23 +198,24 @@ namespace DiamondMiner
                     _spriteBatch.Draw(character[frame], rect, Color.White);
                 }
             }
-            //else
-            //{
-            //    DrawDeath(gameTime, _spriteBatch);
-            //}
+            else
+            {
+                DrawDeath(gameTime, _spriteBatch);
+            }
         }
 
-        //public void DrawDeath(GameTime gameTime, SpriteBatch spriteBatch)
-        //{
-        //    DieAnimFrame = 1.08 * DieAnimFrame;
+        public void DrawDeath(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            DieAnimFrame = 1.016 * DieAnimFrame;
 
-        //    if (DieAnimFrame < 18)
-        //    {
-        //        Rectangle rect = new Rectangle(_instance.position, new Point(game1.tileSize));
-        //        spriteBatch.Draw(dieAnim[(int)DieAnimFrame], rect, Color.White);
-        //        Console.WriteLine(dieAnim[(int)DieAnimFrame]);
-        //    }
-        //}
+            if ((int)DieAnimFrame < 17)
+            {
+                Point pos = new Point(_instance.position.X * game1.tileSize, _instance.position.Y * game1.tileSize);
+                Rectangle rect = new Rectangle(pos, new Point(game1.tileSize));
+                spriteBatch.Draw(dieAnim[(int)DieAnimFrame], rect, Color.White);
+                Console.WriteLine(DieAnimFrame);
+            }
+        }
 
         public int GetVidas()
         {

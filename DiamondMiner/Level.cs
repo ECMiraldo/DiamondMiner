@@ -163,9 +163,10 @@ namespace DiamondMiner
                 
                 if (timer > 2.5)
                 {
-                    timer = 1.08 * timer;
+                    timer = 1.02 * timer;
                     if (timer < 11)
                     {
+                        Console.Write(timer);
                         _spriteBatch.Draw(explosionAnim[(int)timer], rect, null, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0);
 
                     }
