@@ -16,7 +16,7 @@ namespace DiamondMiner
         public  int tileSize = 32;
 
         public Level       currentlevel;
-        private string[]   totalLevels = { "Level1.txt" , "Level2.txt" };
+        private string[]   totalLevels = { "Level1.txt" , "Level2.txt", "Level3.txt" };
         public int         level = 0;
         
         
