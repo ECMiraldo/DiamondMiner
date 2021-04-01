@@ -313,12 +313,7 @@ namespace DiamondMiner
 
         public bool WinCondition()
         {
-            foreach (Point diam in Diamonds)
-            {
-                if (matrix[diam.X, diam.Y] != '$')
-                    return false;
-            }
-            return true;
+            return Diamonds.Count == 0;
         }
 
     }
