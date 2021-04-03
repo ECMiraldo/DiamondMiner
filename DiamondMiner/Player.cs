@@ -222,6 +222,11 @@ namespace DiamondMiner
             return vidas;
         }
 
+        public int GetDynamite()
+        {
+            return dinamites;
+        }
+
         public static Point GetPosition()
         {
             return _instance.position;

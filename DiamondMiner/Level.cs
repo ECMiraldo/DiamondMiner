@@ -13,7 +13,7 @@ namespace DiamondMiner
     public class Level
     {
 
-        private Texture2D diamond, rocks, dirt, dynamite, wall, presentUI;
+        private Texture2D diamond, rocks, dirt, dynamite, wall, presentUI, dynamiteUI;
         private Texture2D[] explosionAnim;
 
         private Game1  game1;
@@ -81,13 +81,14 @@ namespace DiamondMiner
        
         public void LoadLevelContent() //Goes to game1 load
         {
-            diamond   = game1.Content.Load<Texture2D>("Gift");
-            rocks     = game1.Content.Load<Texture2D>("Stone");
-            dirt      = game1.Content.Load<Texture2D>("ground_snow");
-            wall      = game1.Content.Load<Texture2D>("IceBox");
-            dynamite  = game1.Content.Load<Texture2D>("candytnt");
-            arial12   = game1.Content.Load<SpriteFont>("arial12");
-            presentUI = game1.Content.Load<Texture2D>("Gift");
+            diamond    = game1.Content.Load<Texture2D>("gift");
+            rocks      = game1.Content.Load<Texture2D>("Stone");
+            dirt       = game1.Content.Load<Texture2D>("ground_snow");
+            wall       = game1.Content.Load<Texture2D>("IceBox");
+            dynamite   = game1.Content.Load<Texture2D>("candytnt");
+            arial12    = game1.Content.Load<SpriteFont>("arial12");
+            presentUI  = game1.Content.Load<Texture2D>("gift");
+            dynamiteUI = game1.Content.Load<Texture2D>("candytnt");
 
 
             explosionAnim[0]  = game1.Content.Load<Texture2D>("explosion1");
@@ -101,9 +102,6 @@ namespace DiamondMiner
             explosionAnim[8]  = game1.Content.Load<Texture2D>("explosion9");
             explosionAnim[9]  = game1.Content.Load<Texture2D>("explosion10");
             explosionAnim[10] = game1.Content.Load<Texture2D>("explosion11");
-
-            presentUI = game1.Content.Load<Texture2D>("Gift");
-
         }
 
         public void DrawLevel(GameTime gametime, SpriteBatch _spriteBatch ) //Goes to game1 draw
@@ -189,13 +187,27 @@ namespace DiamondMiner
 
             //lifes
             string lifesUI = $"{ Player._instance.GetVidas()}";
-            int posX3 = matrix.GetLength(0) * game1.tileSize - measure.X - 55;
+            int posX3 = matrix.GetLength(0) * game1.tileSize - measure.X - 45;
             _spriteBatch.DrawString(
                 arial12,
                 lifesUI,
                 new Vector2(posX3, matrix.GetLength(1) * game1.tileSize - 15),
+                Color.Cyan);
+
+            //dynamite
+            string dynamitesUI = $"{ Player._instance.GetDynamite() }";
+            int posX5 = matrix.GetLength(0) * game1.tileSize - measure.Y + 3;
+            _spriteBatch.DrawString(
+                arial12,
+                dynamitesUI,
+                new Vector2(posX5, matrix.GetLength(1) * game1.tileSize - 39),
                 Color.Coral);
+            int posX6 = matrix.GetLength(0) * game1.tileSize - measure.Y - 23;
+            _spriteBatch.Draw(dynamiteUI, new Vector2(posX6, matrix.GetLength(1) * game1.tileSize - 39), Color.Coral);
         }
+
+        
+
 
         public bool HasRock(Point p)     => Rocks.Contains(p);
         public bool HasWall(Point p)     => matrix[p.X, p.Y] == '#';
