@@ -18,7 +18,8 @@ namespace DiamondMiner
         public Level       currentlevel;
         private string[]   totalLevels = { "Level1.txt" , "Level2.txt", "Level3.txt" };
         public int         level = 0;
-        
+
+        Texture2D levelComplete;
         
         public Game1()
         {
@@ -47,6 +48,8 @@ namespace DiamondMiner
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             currentlevel.LoadLevelContent();
             Player.LoadSprite();
+            levelComplete = Content.Load<Texture2D>("LevelComplete");
+            
         }
 
         protected override void Update(GameTime gameTime)
@@ -55,8 +58,13 @@ namespace DiamondMiner
                 Exit();
             if (currentlevel.WinCondition())
             {
-                level += 1;
-                Initialize();
+                
+                if(GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Enter))
+                {
+                    level += 1;
+                    Initialize();
+                }
+                
             }
             //if (Player._instance.vidas == 0)
             //{
@@ -78,6 +86,25 @@ namespace DiamondMiner
             _spriteBatch.Begin();
             currentlevel.DrawLevel (gameTime, _spriteBatch);
                   Player.DrawPlayer(gameTime, _spriteBatch);
+
+            if (currentlevel.WinCondition())
+            {
+                Vector2 windowSize = new Vector2(
+                   _graphics.PreferredBackBufferWidth,
+                   _graphics.PreferredBackBufferHeight);
+                // Transparent Layer
+                Texture2D pixel = new Texture2D(GraphicsDevice, 1, 1);
+                pixel.SetData(new[] { Color.White });
+                _spriteBatch.Draw(pixel,
+                    new Rectangle(Point.Zero, windowSize.ToPoint()),
+                    new Color(Color.Black, 0.5f));
+
+                // Draw Win Message
+                
+                
+                _spriteBatch.Draw(levelComplete, new Vector2((_graphics.PreferredBackBufferWidth / 2f) - (4.5f * tileSize), (_graphics.PreferredBackBufferHeight / 2f) - tileSize), Color.White);
+
+            }
             _spriteBatch.End();
 
             base.Draw(gameTime);

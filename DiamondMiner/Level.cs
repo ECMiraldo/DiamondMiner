@@ -13,7 +13,7 @@ namespace DiamondMiner
     public class Level
     {
 
-        private Texture2D diamond, rocks, dirt, dynamite, wall, presentUI, dynamiteUI, lifeUI;
+        private Texture2D diamond, rocks, dirt, dynamite, wall, presentUI, dynamiteUI, lifeUI, defeatUI;
         private Texture2D[] explosionAnim;
 
         private Game1  game1;
@@ -91,6 +91,7 @@ namespace DiamondMiner
             presentUI  = game1.Content.Load<Texture2D>("gift");
             dynamiteUI = game1.Content.Load<Texture2D>("candytnt");
             lifeUI    = game1.Content.Load<Texture2D>("SantaHat");
+            defeatUI = game1.Content.Load<Texture2D>("DieScreen");
 
 
             explosionAnim[0]  = game1.Content.Load<Texture2D>("explosion1");
@@ -208,6 +209,8 @@ namespace DiamondMiner
                 Color.Coral);
             int posX6 = matrix.GetLength(0) * game1.tileSize - measure.X - 28;
             _spriteBatch.Draw(dynamiteUI, new Vector2(posX6, matrix.GetLength(1) * game1.tileSize - 48),  Color.Coral);
+
+           
         }
 
 
