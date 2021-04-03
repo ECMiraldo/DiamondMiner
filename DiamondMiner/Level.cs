@@ -13,12 +13,13 @@ namespace DiamondMiner
     public class Level
     {
 
-        private Texture2D diamond, rocks, dirt, dynamite, wall, presentUI, dynamiteUI;
+        private Texture2D diamond, rocks, dirt, dynamite, wall, presentUI, dynamiteUI, lifeUI;
         private Texture2D[] explosionAnim;
 
         private Game1  game1;
         private SpriteFont arial12;
         private double timer;
+        public float scale = 1.5F;
         public char[,]     matrix;
         public List<Point> Rocks;
         public List<Point> Diamonds;
@@ -89,6 +90,7 @@ namespace DiamondMiner
             arial12    = game1.Content.Load<SpriteFont>("arial12");
             presentUI  = game1.Content.Load<Texture2D>("gift");
             dynamiteUI = game1.Content.Load<Texture2D>("candytnt");
+            lifeUI    = game1.Content.Load<Texture2D>("SantaHat");
 
 
             explosionAnim[0]  = game1.Content.Load<Texture2D>("explosion1");
@@ -180,10 +182,10 @@ namespace DiamondMiner
             _spriteBatch.DrawString(
                 arial12,
                 diamondsUI,
-                new Vector2(posX, matrix.GetLength(1) * game1.tileSize - 15),
+                new Vector2(posX, matrix.GetLength(1) * game1.tileSize - 23),
                 Color.Coral);
-            int posX2 = matrix.GetLength(0) * game1.tileSize - measure.X - 34;
-            _spriteBatch.Draw(presentUI, new Vector2(posX2, matrix.GetLength(1) * game1.tileSize - 20), Color.DarkRed);
+            int posX2 = matrix.GetLength(0) * game1.tileSize - measure.X - 35;
+            _spriteBatch.Draw(presentUI, new Vector2(posX2, matrix.GetLength(1) * game1.tileSize - 30), Color.DarkRed);
 
             //lifes
             string lifesUI = $"{ Player._instance.GetVidas()}";
@@ -191,22 +193,22 @@ namespace DiamondMiner
             _spriteBatch.DrawString(
                 arial12,
                 lifesUI,
-                new Vector2(posX3, matrix.GetLength(1) * game1.tileSize - 15),
+                new Vector2(posX3, matrix.GetLength(1) * game1.tileSize - 23),
                 Color.Cyan);
+            int posX4 = matrix.GetLength(0) * game1.tileSize - measure.X - 75;
+            _spriteBatch.Draw(lifeUI, new Vector2(posX4, matrix.GetLength(1) * game1.tileSize - 30), Color.White);
 
             //dynamite
             string dynamitesUI = $"{ Player._instance.GetDynamite() }";
-            int posX5 = matrix.GetLength(0) * game1.tileSize - measure.Y + 3;
+            int posX5 = matrix.GetLength(0) * game1.tileSize - measure.X - 7;
             _spriteBatch.DrawString(
                 arial12,
                 dynamitesUI,
-                new Vector2(posX5, matrix.GetLength(1) * game1.tileSize - 39),
+                new Vector2(posX5, matrix.GetLength(1) * game1.tileSize - 50),
                 Color.Coral);
-            int posX6 = matrix.GetLength(0) * game1.tileSize - measure.Y - 23;
-            _spriteBatch.Draw(dynamiteUI, new Vector2(posX6, matrix.GetLength(1) * game1.tileSize - 39), Color.Coral);
+            int posX6 = matrix.GetLength(0) * game1.tileSize - measure.X - 28;
+            _spriteBatch.Draw(dynamiteUI, new Vector2(posX6, matrix.GetLength(1) * game1.tileSize - 48),  Color.Coral);
         }
-
-        
 
 
         public bool HasRock(Point p)     => Rocks.Contains(p);

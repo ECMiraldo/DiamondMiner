@@ -14,6 +14,7 @@
     <None Remove="Content\bin\DesktopGL\Diamond2.xnb" />
     <None Remove="Content\bin\DesktopGL\Diamond3.xnb" />
     <None Remove="Content\bin\DesktopGL\Diamond4.xnb" />
+    <None Remove="Content\Santa.png" />
     <None Remove="Icon.ico" />
     <None Remove="Icon.bmp" />
   </ItemGroup>
@@ -94,6 +95,9 @@
     <None Update="Content\Gift.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Content\gift.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Content\ground_snow.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -108,6 +112,9 @@
     </None>
     <None Update="Content\Level2.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\SantaHat.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Content\Stone.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
