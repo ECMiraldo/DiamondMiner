@@ -206,7 +206,7 @@ namespace DiamondMiner
 
         public void DrawDeath(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            DieAnimFrame = 1.016 * DieAnimFrame;
+            DieAnimFrame = 1.012 * DieAnimFrame;
 
             if ((int)DieAnimFrame < 17)
             {
