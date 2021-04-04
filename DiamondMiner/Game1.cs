@@ -61,40 +61,34 @@ namespace DiamondMiner
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             if (Keyboard.GetState().IsKeyDown(Keys.R)) Initialize();
-            //Level Complete
-            if (currentlevel.WinCondition())
+            if (Keyboard.GetState().IsKeyDown(Keys.Enter))
             {
-                
-                if(GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Enter))
+                //Level Complete
+                if (currentlevel.WinCondition())
                 {
                     Player._instance.dinamites++;
                     level += 1;
                     Initialize();
                 }
-                
-            }
-            //Defeat Restart
-            if (Player._instance.vidas <= 0)
-            {
-                if(Keyboard.GetState().IsKeyDown(Keys.Enter))
+                //Defeat Restart
+                else if (Player._instance.vidas <= 0)
                 {
                     Initialize();
                     Player._instance.vidas = 3;
+                    if (Player._instance.dinamites == 0) Player._instance.dinamites = 1;
                 }
-                
-            }
-            //Win Restart/Exit
-            if(level == totalLevels.Length)
-            {
-                if (currentlevel.WinCondition())
+                //Win Restart/Exit
+                else if (level == totalLevels.Length)
                 {
-                    if (Keyboard.GetState().IsKeyDown(Keys.Enter))
+                    if (currentlevel.WinCondition())
                     {
                         Initialize();
                         Player._instance.vidas = 3;
                     }
+
                 }
             }
+
             Player.Movement(gameTime); //Notice how player.movement actualizes level.draw
             currentlevel.RockGravity(gameTime);
             currentlevel.PlaceDinamite(gameTime);

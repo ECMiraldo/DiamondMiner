@@ -153,7 +153,7 @@ namespace DiamondMiner
             //rocks
             foreach (Point r in Rocks)
             {
-                Point pixelpos = r; pixelpos.X = game1.tileSize * pixelpos.X ; pixelpos.Y = game1.tileSize* pixelpos.Y;
+                Point pixelpos = r; pixelpos.X = game1.tileSize* pixelpos.X ; pixelpos.Y = game1.tileSize* pixelpos.Y;
                 Rectangle rect = new Rectangle(pixelpos, new Point(game1.tileSize));
                 _spriteBatch.Draw(rocks, rect, Color.White);
 
@@ -163,35 +163,44 @@ namespace DiamondMiner
             //present
             string diamondsUI = $"{ Diamonds.Count}";
             Point measure = arial12.MeasureString(diamondsUI).ToPoint();
+
             int posX = matrix.GetLength(0) * game1.tileSize - measure.X - 5;
             _spriteBatch.DrawString(
                 arial12,
                 diamondsUI,
                 new Vector2(posX, matrix.GetLength(1) * game1.tileSize - 23),
                 Color.Coral);
+
             int posX2 = matrix.GetLength(0) * game1.tileSize - measure.X - 35;
+
             _spriteBatch.Draw(presentUI, new Vector2(posX2, matrix.GetLength(1) * game1.tileSize - 30), Color.DarkRed);
 
             //lifes
             string lifesUI = $"{ Player._instance.GetVidas()}";
             int posX3 = matrix.GetLength(0) * game1.tileSize - measure.X - 45;
+
             _spriteBatch.DrawString(
                 arial12,
                 lifesUI,
                 new Vector2(posX3, matrix.GetLength(1) * game1.tileSize - 23),
                 Color.Cyan);
+
             int posX4 = matrix.GetLength(0) * game1.tileSize - measure.X - 75;
+
             _spriteBatch.Draw(lifeUI, new Vector2(posX4, matrix.GetLength(1) * game1.tileSize - 30), Color.White);
 
             //dynamite
             string dynamitesUI = $"{ Player._instance.GetDynamite() }";
             int posX5 = matrix.GetLength(0) * game1.tileSize - measure.X - 7;
+
             _spriteBatch.DrawString(
                 arial12,
                 dynamitesUI,
                 new Vector2(posX5, matrix.GetLength(1) * game1.tileSize - 50),
                 Color.Coral);
+
             int posX6 = matrix.GetLength(0) * game1.tileSize - measure.X - 28;
+
             _spriteBatch.Draw(dynamiteUI, new Vector2(posX6, matrix.GetLength(1) * game1.tileSize - 48),  Color.Coral);
 
 
@@ -212,15 +221,6 @@ namespace DiamondMiner
                 }
             }
         }
-
-
-        public bool HasRock(Point p)     => Rocks.Contains(p);
-        public bool HasWall(Point p)     => matrix[p.X, p.Y] == '#';
-        public bool HasDynamite(Point p) => Dynamite.Contains(p);
-        public bool HasDiamond(Point p)  => Diamonds.Contains(p);
-        public bool EmptyTile(Point p)   => (InMatrix(p) &&  matrix[p.X, p.Y] == ' ');
-        public bool DirtTile(Point p)    => (InMatrix(p) && (matrix[p.X, p.Y] == '.'));
-        public bool InMatrix(Point p)    => ((p.X >= 0 && p.Y >= 0) && (p.X < matrix.GetLength(0) && p.Y < matrix.GetLength(1)));
         public void RockGravity(GameTime gametime)
         {
             if (delta > 0)
@@ -327,11 +327,14 @@ namespace DiamondMiner
             }
         }
 
+        public bool HasRock(Point p) => Rocks.Contains(p);
+        public bool HasWall(Point p) => matrix[p.X, p.Y] == '#';
+        public bool HasDynamite(Point p) => Dynamite.Contains(p);
+        public bool HasDiamond(Point p) => Diamonds.Contains(p);
+        public bool EmptyTile(Point p) => (InMatrix(p) && matrix[p.X, p.Y] == ' ');
+        public bool DirtTile(Point p) => (InMatrix(p) && (matrix[p.X, p.Y] == '.'));
+        public bool InMatrix(Point p) => ((p.X >= 0 && p.Y >= 0) && (p.X < matrix.GetLength(0) && p.Y < matrix.GetLength(1)));
         public bool WinCondition() => Diamonds.Count == 0;
-
     }
-
-
-
 } 
 
