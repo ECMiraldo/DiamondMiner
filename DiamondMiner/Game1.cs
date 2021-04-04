@@ -84,8 +84,8 @@ namespace DiamondMiner
                 //Defeat Restart
                 else if (Player._instance.vidas <= 0)
                 {
-                    Initialize();
                     level = 0;
+                    Initialize();
                     Player._instance.vidas = 3;
                     if (Player._instance.dinamites == 0) Player._instance.dinamites = 1;
                 }
