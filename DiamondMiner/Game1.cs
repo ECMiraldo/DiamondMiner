@@ -116,7 +116,7 @@ namespace DiamondMiner
                 pixel.SetData(new[] { Color.White });
                 _spriteBatch.Draw(pixel,
                     new Rectangle(Point.Zero, windowSize.ToPoint()),
-                    new Color(Color.Black, 0.5f));
+                    new Color(Color.DarkGray, 0.5f));
 
                 // Draw Win Message
                 
