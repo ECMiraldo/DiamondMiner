@@ -334,6 +334,7 @@ namespace DiamondMiner
             return Diamonds.Count == 0;
         }
 
+
     }
 
 

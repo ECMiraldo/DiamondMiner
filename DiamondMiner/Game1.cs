@@ -19,7 +19,7 @@ namespace DiamondMiner
         private string[]   totalLevels = { "Level1.txt" , "Level2.txt", "Level3.txt" };
         public int         level = 0;
 
-        Texture2D levelComplete;
+        Texture2D levelComplete, dieScreen, pressEsc, pressEnter,gameComplete;
         
         public Game1()
         {
@@ -49,7 +49,11 @@ namespace DiamondMiner
             currentlevel.LoadLevelContent();
             Player.LoadSprite();
             levelComplete = Content.Load<Texture2D>("LevelComplete");
-            
+            dieScreen = Content.Load<Texture2D>("DieScreen");
+            gameComplete = Content.Load<Texture2D>("GameComplete");
+            pressEnter = Content.Load<Texture2D>("PressEnter");
+            pressEsc = Content.Load<Texture2D>("PressEsc");
+
         }
 
         protected override void Update(GameTime gameTime)
@@ -57,6 +61,7 @@ namespace DiamondMiner
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             if (Keyboard.GetState().IsKeyDown(Keys.R)) Initialize();
+            //Level Complete
             if (currentlevel.WinCondition())
             {
                 
@@ -68,11 +73,33 @@ namespace DiamondMiner
                 }
                 
             }
-            //if (Player._instance.vidas == 0)
-            //{
-            //    Initialize();
-            //    Player._instance.vidas = 3;
-            //}
+            //Defeat Restart
+            if (Player._instance.vidas <= 0)
+            {
+                if(GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Enter))
+                {
+                    Initialize();
+                    Player._instance.vidas = 3;
+                }
+                
+            }
+            //Win Restart/Exit
+            if(level == totalLevels.Length)
+            {
+                if (currentlevel.WinCondition())
+                {
+                    if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Enter))
+                    {
+                        Initialize();
+                        Player._instance.vidas = 3;
+                    }
+
+                    if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+                    {
+                        Exit();
+                    }
+                }
+            }
             Player.Movement(gameTime); //Notice how player.movement actualizes level.draw
             currentlevel.RockGravity(gameTime);
             currentlevel.PlaceDinamite(gameTime);
@@ -89,7 +116,8 @@ namespace DiamondMiner
             currentlevel.DrawLevel (gameTime, _spriteBatch);
                   Player.DrawPlayer(gameTime, _spriteBatch);
 
-            if (currentlevel.WinCondition())
+            //Level Complete UI
+            if (currentlevel.WinCondition() && level < totalLevels.Length)
             {
                 Vector2 windowSize = new Vector2(
                    _graphics.PreferredBackBufferWidth,
@@ -106,6 +134,54 @@ namespace DiamondMiner
                 
                 _spriteBatch.Draw(levelComplete, new Vector2((_graphics.PreferredBackBufferWidth / 2f) - (4.5f * tileSize), (_graphics.PreferredBackBufferHeight / 2f) - tileSize), Color.White);
 
+            }
+
+            //Defeat UI
+            
+            if (Player._instance.vidas <= 0)
+            {
+                Vector2 windowSize2 = new Vector2(
+                   _graphics.PreferredBackBufferWidth,
+                   _graphics.PreferredBackBufferHeight);
+                // Transparent Layer
+                Texture2D pixel2 = new Texture2D(GraphicsDevice, 1, 1);
+                pixel2.SetData(new[] { Color.White });
+                _spriteBatch.Draw(pixel2,
+                    new Rectangle(Point.Zero, windowSize2.ToPoint()),
+                    new Color(Color.Black, 0.9f));
+
+                // Draw Win Message
+
+
+                _spriteBatch.Draw(dieScreen, new Vector2((_graphics.PreferredBackBufferWidth / 2f) - (4.5f * tileSize), (_graphics.PreferredBackBufferHeight / 2f) - (2*tileSize)), Color.White);
+                _spriteBatch.Draw(pressEnter, new Vector2((_graphics.PreferredBackBufferWidth / 2f) - (3f * tileSize), (_graphics.PreferredBackBufferHeight / 2f) + tileSize), Color.White);
+                _spriteBatch.Draw(pressEsc, new Vector2((_graphics.PreferredBackBufferWidth / 2f) - (3f * tileSize), (_graphics.PreferredBackBufferHeight / 2f) + 2*tileSize), Color.White);
+
+            }
+            // Game Compleye UI
+
+            if (level == totalLevels.Length)
+            {
+                 if(currentlevel.WinCondition())
+                 {
+                    Vector2 windowSize2 = new Vector2(
+                     _graphics.PreferredBackBufferWidth,
+                     _graphics.PreferredBackBufferHeight);
+                    // Transparent Layer
+                    Texture2D pixel2 = new Texture2D(GraphicsDevice, 1, 1);
+                    pixel2.SetData(new[] { Color.White });
+                    _spriteBatch.Draw(pixel2,
+                        new Rectangle(Point.Zero, windowSize2.ToPoint()),
+                        new Color(Color.Black, 0.9f));
+
+                    // Draw Win Message
+
+
+                    _spriteBatch.Draw (gameComplete, new Vector2((_graphics.PreferredBackBufferWidth / 2f) - (4.5f * tileSize), (_graphics.PreferredBackBufferHeight / 2f) - tileSize), Color.White);
+                    _spriteBatch.Draw(pressEnter, new Vector2((_graphics.PreferredBackBufferWidth / 2f) - (3f * tileSize), (_graphics.PreferredBackBufferHeight / 2f) + tileSize), Color.White);
+                    _spriteBatch.Draw(pressEsc, new Vector2((_graphics.PreferredBackBufferWidth / 2f) - (3f * tileSize), (_graphics.PreferredBackBufferHeight / 2f) + 2 * tileSize), Color.White);
+
+                 }
             }
             _spriteBatch.End();
 
