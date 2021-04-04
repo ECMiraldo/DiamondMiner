@@ -31,6 +31,7 @@ namespace DiamondMiner
 
         private bool explosion;
         private Point explosionPos;
+        private bool PlayerExplosionDamage = false;
         //Basicamente, tudo o que este construtor faz é prencher a matriz do level, e adicionar os Diamantes e Dynamites nas respectivas listas.
         public Level(Game1 game1, string levelFile) //Goes to game1 Initialize
         {
@@ -39,6 +40,7 @@ namespace DiamondMiner
 
             explosionAnim = new Texture2D[11];
             explosion     = false;
+            
             
             Diamonds = new List<Point>();
             Rocks    = new List<Point>();
@@ -157,25 +159,6 @@ namespace DiamondMiner
 
             }
 
-            //explosion
-            if (explosion)
-            {
-                Point pos = new Point((explosionPos.X - 1) * game1.tileSize, (explosionPos.Y - 1) * game1.tileSize);
-                Rectangle rect = new Rectangle(pos, new Point(game1.tileSize * 3));
-                
-                if (timer >= 2.5)
-                {
-                    timer = 1.06 * timer;
-                    Console.WriteLine(timer + 20);
-                    if (timer < 11)
-                    { 
-                        _spriteBatch.Draw(explosionAnim[(int)timer], rect, null, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0);
-                        
-                    }
-                    else explosion = false;
-                }
-            }
-
             //Draw UI
             //present
             string diamondsUI = $"{ Diamonds.Count}";
@@ -211,7 +194,23 @@ namespace DiamondMiner
             int posX6 = matrix.GetLength(0) * game1.tileSize - measure.X - 28;
             _spriteBatch.Draw(dynamiteUI, new Vector2(posX6, matrix.GetLength(1) * game1.tileSize - 48),  Color.Coral);
 
-           
+
+            if (explosion)
+            {
+                Point pos = new Point((explosionPos.X - 1) * game1.tileSize, (explosionPos.Y - 1) * game1.tileSize);
+                Rectangle rect = new Rectangle(pos, new Point(game1.tileSize * 3));
+                
+                if (timer >= 2.5)
+                {
+                    timer = 1.06 * timer;
+                    if (timer < 11) _spriteBatch.Draw(explosionAnim[(int)timer], rect, null, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0);
+                    else
+                    {
+                        explosion = false;
+                        if (PlayerExplosionDamage) Player._instance.vidas--;
+                    }
+                }
+            }
         }
 
 
@@ -302,8 +301,7 @@ namespace DiamondMiner
             {
                 int x = explosionPos.X;
                 int y = explosionPos.Y;
-
-
+                
                 timer = timer + gameTime.ElapsedGameTime.TotalSeconds;
                 List<Point> ExplosionRadius = new List<Point>();
                 ExplosionRadius.Add(new Point(x, y));
@@ -317,23 +315,19 @@ namespace DiamondMiner
                 ExplosionRadius.Add(new Point(x - 1, y + 1));
                 if (timer > 2.5f)
                 {
-                    if (ExplosionRadius.Contains(Player._instance.position)) Player._instance.vidas--;
+                    if (ExplosionRadius.Contains(Player._instance.position)) PlayerExplosionDamage = true;
                     foreach (Point p in ExplosionRadius)
                     {
                         matrix[x, y] = ' ';
                         matrix[p.X, p.Y] = ' ';
                         
                     }
-                    if (timer > 5) ExplosionRadius.Clear();
+                    ExplosionRadius.Clear();
                 }
             }
         }
 
-        public bool WinCondition()
-        {
-            return Diamonds.Count == 0;
-        }
-
+        public bool WinCondition() => Diamonds.Count == 0;
 
     }
 

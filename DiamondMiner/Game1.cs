@@ -76,7 +76,7 @@ namespace DiamondMiner
             //Defeat Restart
             if (Player._instance.vidas <= 0)
             {
-                if(GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Enter))
+                if(Keyboard.GetState().IsKeyDown(Keys.Enter))
                 {
                     Initialize();
                     Player._instance.vidas = 3;
@@ -88,15 +88,10 @@ namespace DiamondMiner
             {
                 if (currentlevel.WinCondition())
                 {
-                    if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Enter))
+                    if (Keyboard.GetState().IsKeyDown(Keys.Enter))
                     {
                         Initialize();
                         Player._instance.vidas = 3;
-                    }
-
-                    if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                    {
-                        Exit();
                     }
                 }
             }
@@ -140,6 +135,7 @@ namespace DiamondMiner
             
             if (Player._instance.vidas <= 0)
             {
+                Player.DrawPlayer(gameTime, _spriteBatch);
                 Vector2 windowSize2 = new Vector2(
                    _graphics.PreferredBackBufferWidth,
                    _graphics.PreferredBackBufferHeight);
