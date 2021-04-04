@@ -176,7 +176,7 @@ namespace DiamondMiner
             _spriteBatch.Draw(presentUI, new Vector2(posX2, matrix.GetLength(1) * game1.tileSize - 30), Color.DarkRed);
 
             //lifes
-            string lifesUI = $"{ Player._instance.GetVidas()}";
+            string lifesUI = $"{ Player._instance.vidas}";
             int posX3 = matrix.GetLength(0) * game1.tileSize - measure.X - 45;
 
             _spriteBatch.DrawString(
@@ -190,7 +190,7 @@ namespace DiamondMiner
             _spriteBatch.Draw(lifeUI, new Vector2(posX4, matrix.GetLength(1) * game1.tileSize - 30), Color.White);
 
             //dynamite
-            string dynamitesUI = $"{ Player._instance.GetDynamite() }";
+            string dynamitesUI = $"{ Player._instance.dinamites }";
             int posX5 = matrix.GetLength(0) * game1.tileSize - measure.X - 7;
 
             _spriteBatch.DrawString(
@@ -293,7 +293,7 @@ namespace DiamondMiner
                 Player._instance.dinamites--;
                 Player._instance.game1.currentlevel.matrix[Player._instance.position.X, Player._instance.position.Y] = 'E';
                 explosion = true;
-                explosionPos = Player.GetPosition();         
+                explosionPos = Player._instance.position;         
             }
         }
 
