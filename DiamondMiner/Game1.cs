@@ -16,7 +16,7 @@ namespace DiamondMiner
         public  int tileSize = 32;
 
         public Level       currentlevel;
-        private string[]   totalLevels = { "Level1.txt" , "Level2.txt", "Level3.txt" };
+        private string[]   totalLevels = { "Level1.txt" /*, "Level2.txt", "Level3.txt"*/ };
         public int         level = 0;
 
         Texture2D levelComplete, dieScreen, pressEsc, pressEnter,gameComplete;
@@ -67,8 +67,19 @@ namespace DiamondMiner
                 if (currentlevel.WinCondition())
                 {
                     Player._instance.dinamites++;
-                    level += 1;
-                    Initialize();
+
+                    //if its the last level
+                    if (level == totalLevels.Length - 1)
+                    {
+                        level = 0;
+                        Initialize();
+                        Player._instance.vidas = 3;
+                    }
+                    else
+                    {
+                        level += 1;
+                        Initialize();
+                    }
                 }
                 //Defeat Restart
                 else if (Player._instance.vidas <= 0)
@@ -77,16 +88,6 @@ namespace DiamondMiner
                     level = 0;
                     Player._instance.vidas = 3;
                     if (Player._instance.dinamites == 0) Player._instance.dinamites = 1;
-                }
-                //Win Restart/Exit
-                else if (level == totalLevels.Length)
-                {
-                    if (currentlevel.WinCondition())
-                    {
-                        Initialize();
-                        Player._instance.vidas = 3;
-                    }
-
                 }
             }
 
@@ -151,7 +152,7 @@ namespace DiamondMiner
             }
             // Game Compleye UI
 
-            if (level-1 == totalLevels.Length)
+            if (level+1 == totalLevels.Length)
             {
                  if(currentlevel.WinCondition())
                  {

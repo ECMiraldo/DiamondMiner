@@ -252,7 +252,7 @@ namespace DiamondMiner
                         }
                         Point rightD = new Point(Down.X + 1, Down.Y);
                         Point right = new Point(rightD.X, rightD.Y - 1);
-                        if (EmptyTile(rightD) && EmptyTile(right)
+                        if (EmptyTile(rightD) && EmptyTile(right))
                         {
                             if (right == Player._instance.position)
                             {
