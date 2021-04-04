@@ -35,10 +35,11 @@ namespace DiamondMiner
         public Level(Game1 game1, string levelFile) //Goes to game1 Initialize
         {
             this.game1 = game1;
+            
 
             explosionAnim = new Texture2D[11];
             explosion     = false;
-
+            
             Diamonds = new List<Point>();
             Rocks    = new List<Point>();
             Dynamite = new List<Point>();

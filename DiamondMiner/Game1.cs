@@ -56,11 +56,13 @@ namespace DiamondMiner
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+            if (Keyboard.GetState().IsKeyDown(Keys.R)) Initialize();
             if (currentlevel.WinCondition())
             {
                 
                 if(GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Enter))
                 {
+                    Player._instance.dinamites++;
                     level += 1;
                     Initialize();
                 }
