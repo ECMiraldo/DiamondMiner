@@ -152,12 +152,14 @@ namespace DiamondMiner
                 else if (game1.currentlevel.HasDiamond(position))
                 {
                     game1.currentlevel.Diamonds.Remove(position);
+                    game1.currentlevel.matrix[position.X, position.Y] = ' ';
                     diamonds++;
                 }
                 // Se o destino é dynamite, recolhe dinamite e move
                 else if (game1.currentlevel.HasDynamite(position))
                 {
-                    game1.currentlevel.Diamonds.Remove(position);
+                    game1.currentlevel.Dynamite.Remove(position);
+                    game1.currentlevel.matrix[position.X, position.Y] = ' ';
                     dinamites++;
                 }
                 // Se o destino é terra, entao retira a terra

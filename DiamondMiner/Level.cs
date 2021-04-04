@@ -235,10 +235,11 @@ namespace DiamondMiner
                     Point Down = new Point(Rocks[i].X, Rocks[i].Y + 1);
                     if (HasRock(Down) || HasDiamond(Down) || HasDynamite(Down))
                     {
-                        Point left = new Point(Down.X - 1, Down.Y);
-                        if (EmptyTile(left))
+                        Point leftD = new Point(Down.X - 1, Down.Y);
+                        Point left = new Point(leftD.X, leftD.Y - 1);
+                        if (EmptyTile(leftD) && EmptyTile(left))
                         {
-                            if (left == Player._instance.position)
+                            if (leftD == Player._instance.position)
                             {
                                 Player._instance.position.Y -= 1;
                                 Player._instance.vidas--;
@@ -249,8 +250,9 @@ namespace DiamondMiner
                             matrix[origin.X, origin.Y] = ' ';
                             matrix[Rocks[i].X, Rocks[i].Y] = '*';
                         }
-                        Point right = new Point(Down.X + 1, Down.Y);
-                        if (EmptyTile(right))
+                        Point rightD = new Point(Down.X + 1, Down.Y);
+                        Point right = new Point(rightD.X, rightD.Y - 1);
+                        if (EmptyTile(rightD) && EmptyTile(right)
                         {
                             if (right == Player._instance.position)
                             {
