@@ -150,7 +150,7 @@ namespace DiamondMiner
             }
             // Game Compleye UI
 
-            if (level == totalLevels.Length)
+            if (level-1 == totalLevels.Length)
             {
                  if(currentlevel.WinCondition())
                  {
