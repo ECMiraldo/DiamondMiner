@@ -320,9 +320,7 @@ namespace DiamondMiner
                     if (ExplosionRadius.Contains(Player._instance.position)) PlayerExplosionDamage = true;
                     foreach (Point p in ExplosionRadius)
                     {
-                        matrix[x, y] = ' ';
-                        matrix[p.X, p.Y] = ' ';
-                        
+                        matrix[p.X, p.Y] = ' '; 
                     }
                     ExplosionRadius.Clear();
                 }
